@@ -1,0 +1,20 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "group": "trade_station_staff_key",
+    "pattern": [
+        "*  ",
+        " x ",
+        "  x"
+    ],
+    "key": {
+        "*": {
+            "tag": "forge:ingots/iron"
+        },
+        "x": {
+            "tag": "forge:nuggets/iron"
+        }
+    },
+    "result": {
+        "item": "barter:trade_station_staff_key"
+    }
+}

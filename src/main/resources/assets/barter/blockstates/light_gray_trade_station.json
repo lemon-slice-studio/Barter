@@ -1,0 +1,351 @@
+{
+    "multipart": [
+        {
+            "when": {
+                "facing": "north"
+            },
+            "apply": {
+                "model": "barter:block/trade_station/light_gray_trade_station",
+                "y": 180
+            }
+        },
+        {
+            "when": {
+                "facing": "south"
+            },
+            "apply": {
+                "model": "barter:block/trade_station/light_gray_trade_station"
+            }
+        },
+        {
+            "when": {
+                "facing": "west"
+            },
+            "apply": {
+                "model": "barter:block/trade_station/light_gray_trade_station",
+                "y": 90
+            }
+        },
+        {
+            "when": {
+                "facing": "east"
+            },
+            "apply": {
+                "model": "barter:block/trade_station/light_gray_trade_station",
+                "y": 270
+            }
+        },
+        {
+            "when": {
+                "facing": "south",
+                "edge": "iron"
+            },
+            "apply": {
+                "model": "barter:block/trade_station_edge/iron_edge_line"
+            }
+        },
+        {
+            "when": {
+                "facing": "west",
+                "edge": "iron"
+            },
+            "apply": {
+                "model": "barter:block/trade_station_edge/iron_edge_line",
+                "y": 90
+            }
+        },
+        {
+            "when": {
+                "facing": "north",
+                "edge": "iron"
+            },
+            "apply": {
+                "model": "barter:block/trade_station_edge/iron_edge_line",
+                "y": 180
+            }
+        },
+        {
+            "when": {
+                "facing": "east",
+                "edge": "iron"
+            },
+            "apply": {
+                "model": "barter:block/trade_station_edge/iron_edge_line",
+                "y": 270
+            }
+        },
+        {
+            "when": {
+                "facing": "south",
+                "edge": "gold"
+            },
+            "apply": {
+                "model": "barter:block/trade_station_edge/gold_edge_line"
+            }
+        },
+        {
+            "when": {
+                "facing": "west",
+                "edge": "gold"
+            },
+            "apply": {
+                "model": "barter:block/trade_station_edge/gold_edge_line",
+                "y": 90
+            }
+        },
+        {
+            "when": {
+                "facing": "north",
+                "edge": "gold"
+            },
+            "apply": {
+                "model": "barter:block/trade_station_edge/gold_edge_line",
+                "y": 180
+            }
+        },
+        {
+            "when": {
+                "facing": "east",
+                "edge": "gold"
+            },
+            "apply": {
+                "model": "barter:block/trade_station_edge/gold_edge_line",
+                "y": 270
+            }
+        },
+        {
+            "when": {
+                "facing": "south",
+                "edge": "lapis"
+            },
+            "apply": {
+                "model": "barter:block/trade_station_edge/lapis_edge_line"
+            }
+        },
+        {
+            "when": {
+                "facing": "west",
+                "edge": "lapis"
+            },
+            "apply": {
+                "model": "barter:block/trade_station_edge/lapis_edge_line",
+                "y": 90
+            }
+        },
+        {
+            "when": {
+                "facing": "north",
+                "edge": "lapis"
+            },
+            "apply": {
+                "model": "barter:block/trade_station_edge/lapis_edge_line",
+                "y": 180
+            }
+        },
+        {
+            "when": {
+                "facing": "east",
+                "edge": "lapis"
+            },
+            "apply": {
+                "model": "barter:block/trade_station_edge/lapis_edge_line",
+                "y": 270
+            }
+        },
+        {
+            "when": {
+                "facing": "south",
+                "edge": "emerald"
+            },
+            "apply": {
+                "model": "barter:block/trade_station_edge/emerald_edge_line"
+            }
+        },
+        {
+            "when": {
+                "facing": "west",
+                "edge": "emerald"
+            },
+            "apply": {
+                "model": "barter:block/trade_station_edge/emerald_edge_line",
+                "y": 90
+            }
+        },
+        {
+            "when": {
+                "facing": "north",
+                "edge": "emerald"
+            },
+            "apply": {
+                "model": "barter:block/trade_station_edge/emerald_edge_line",
+                "y": 180
+            }
+        },
+        {
+            "when": {
+                "facing": "east",
+                "edge": "emerald"
+            },
+            "apply": {
+                "model": "barter:block/trade_station_edge/emerald_edge_line",
+                "y": 270
+            }
+        },
+        {
+            "when": {
+                "facing": "south",
+                "edge": "redstone"
+            },
+            "apply": {
+                "model": "barter:block/trade_station_edge/redstone_edge_line"
+            }
+        },
+        {
+            "when": {
+                "facing": "west",
+                "edge": "redstone"
+            },
+            "apply": {
+                "model": "barter:block/trade_station_edge/redstone_edge_line",
+                "y": 90
+            }
+        },
+        {
+            "when": {
+                "facing": "north",
+                "edge": "redstone"
+            },
+            "apply": {
+                "model": "barter:block/trade_station_edge/redstone_edge_line",
+                "y": 180
+            }
+        },
+        {
+            "when": {
+                "facing": "east",
+                "edge": "redstone"
+            },
+            "apply": {
+                "model": "barter:block/trade_station_edge/redstone_edge_line",
+                "y": 270
+            }
+        },
+        {
+            "when": {
+                "facing": "south",
+                "edge": "netherite"
+            },
+            "apply": {
+                "model": "barter:block/trade_station_edge/netherite_edge_line"
+            }
+        },
+        {
+            "when": {
+                "facing": "west",
+                "edge": "netherite"
+            },
+            "apply": {
+                "model": "barter:block/trade_station_edge/netherite_edge_line",
+                "y": 90
+            }
+        },
+        {
+            "when": {
+                "facing": "north",
+                "edge": "netherite"
+            },
+            "apply": {
+                "model": "barter:block/trade_station_edge/netherite_edge_line",
+                "y": 180
+            }
+        },
+        {
+            "when": {
+                "facing": "east",
+                "edge": "netherite"
+            },
+            "apply": {
+                "model": "barter:block/trade_station_edge/netherite_edge_line",
+                "y": 270
+            }
+        },
+        {
+            "when": {
+                "facing": "south",
+                "edge": "quartz"
+            },
+            "apply": {
+                "model": "barter:block/trade_station_edge/quartz_edge_line"
+            }
+        },
+        {
+            "when": {
+                "facing": "west",
+                "edge": "quartz"
+            },
+            "apply": {
+                "model": "barter:block/trade_station_edge/quartz_edge_line",
+                "y": 90
+            }
+        },
+        {
+            "when": {
+                "facing": "north",
+                "edge": "quartz"
+            },
+            "apply": {
+                "model": "barter:block/trade_station_edge/quartz_edge_line",
+                "y": 180
+            }
+        },
+        {
+            "when": {
+                "facing": "east",
+                "edge": "quartz"
+            },
+            "apply": {
+                "model": "barter:block/trade_station_edge/quartz_edge_line",
+                "y": 270
+            }
+        },
+        {
+            "when": {
+                "facing": "south",
+                "edge": "diamond"
+            },
+            "apply": {
+                "model": "barter:block/trade_station_edge/diamond_edge_line"
+            }
+        },
+        {
+            "when": {
+                "facing": "west",
+                "edge": "diamond"
+            },
+            "apply": {
+                "model": "barter:block/trade_station_edge/diamond_edge_line",
+                "y": 90
+            }
+        },
+        {
+            "when": {
+                "facing": "north",
+                "edge": "diamond"
+            },
+            "apply": {
+                "model": "barter:block/trade_station_edge/diamond_edge_line",
+                "y": 180
+            }
+        },
+        {
+            "when": {
+                "facing": "east",
+                "edge": "diamond"
+            },
+            "apply": {
+                "model": "barter:block/trade_station_edge/diamond_edge_line",
+                "y": 270
+            }
+        }
+    ]
+}

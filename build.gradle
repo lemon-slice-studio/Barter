@@ -88,14 +88,14 @@ repositories {
         url = "http://maven.lemonslice.cloud/releases"
     }
     maven {
-        url 'https://www.dogforce-games.com/maven/'
+        url = "https://www.dogforce-games.com/maven/"
     }
 }
 
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 
-    compile fg.deobf("cloud.lemonslice.silveroak:SilveroakOutpost-Forge-1.16.5:0.2.0-Alpha")
+    compile fg.deobf("cloud.lemonslice.silveroak:SilveroakOutpost-Forge-1.16.5:0.3.2-Beta")
 }
 
 jar {

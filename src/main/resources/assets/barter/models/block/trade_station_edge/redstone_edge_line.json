@@ -1,0 +1,6 @@
+{
+    "parent": "barter:block/trade_station_edge/edge_line",
+    "textures": {
+        "line": "block/redstone_block"
+    }
+}

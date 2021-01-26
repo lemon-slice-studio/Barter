@@ -1,0 +1,6 @@
+{
+    "parent": "barter:block/trade_station/trade_station_base",
+    "textures": {
+        "wool": "block/orange_wool"
+    }
+}
