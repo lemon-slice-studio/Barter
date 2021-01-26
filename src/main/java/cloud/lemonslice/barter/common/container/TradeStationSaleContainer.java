@@ -24,21 +24,21 @@ public class TradeStationSaleContainer extends Container
         tileEntity.getContainerInventory().ifPresent(h ->
         {
             addSlot(new SlotItemHandler(h, 0, 8, 124));
-            for (int i = 0; i < 2; ++i)
+            for (int i = 2; i < 4; ++i)
             {
                 for (int j = 0; j < 9; ++j)
                 {
-                    addSlot(new SlotItemHandler(h, j + i * 9 + 1, 8 + j * 18, 16 + i * 18));
+                    addSlot(new SlotItemHandler(h, j + i * 9 - 17, 8 + j * 18, 16 + i * 18 + 3));
                 }
             }
         });
         tileEntity.getPurchaseInventory().ifPresent(h ->
         {
-            for (int i = 2; i < 4; ++i)
+            for (int i = 0; i < 2; ++i)
             {
                 for (int j = 0; j < 9; ++j)
                 {
-                    addSlot(new SlotItemHandler(h, j + i * 9 - 18, 8 + j * 18, 16 + i * 18 + 3));
+                    addSlot(new SlotItemHandler(h, j + i * 9, 8 + j * 18, 16 + i * 18));
                 }
             }
         });

@@ -24,3 +24,9 @@ mandatory = true
 versionRange = "[1.16.2,1.17)"
 ordering = "NONE"
 side = "BOTH"
+[[dependencies.barter]]
+modId = "silveroakoutpost"
+mandatory = true
+versionRange = "[0.3.2-Alpha,)"
+ordering = "NONE"
+side = "BOTH"
