@@ -27,6 +27,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 import static cloud.lemonslice.barter.common.tileentity.TileEntityTypesRegistry.NORMAL_TRADE_STATION;
+import static net.minecraft.state.properties.BlockStateProperties.TRIGGERED;
 
 public class TradeStationBlockTileEntity extends NormalContainerTileEntity
 {
@@ -35,10 +36,13 @@ public class TradeStationBlockTileEntity extends NormalContainerTileEntity
     private final ItemStackHandler inputInventory = this.createItemHandler(4);
     private final List<Pair<Ingredient, Integer>> inputIngredients = Lists.newArrayList();
 
-    private String uuid = "";
+    private String uuidOwner = "";
+    private String uuidStaff = "";
     private String input = "";
     private int check = 0;
+    private int redstoneMode = 0; // 0 for short pulse; 1 for long pulse; 2 for none.
     private boolean isSpecialMode = false;
+    private boolean isLocked = false;
 
     public TradeStationBlockTileEntity()
     {
@@ -53,8 +57,11 @@ public class TradeStationBlockTileEntity extends NormalContainerTileEntity
         this.purchaseInventory.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("Purchase")));
         ((INBTSerializable<CompoundNBT>) inputInventory).deserializeNBT(tag.getCompound("InputContainer"));
         setInput(tag.getString("Input"));
-        uuid = tag.getString("UUID");
+        uuidOwner = tag.getString("UUID");
+        uuidStaff = tag.getString("UUIDStaff");
+        redstoneMode = tag.getInt("RedstoneMode");
         isSpecialMode = tag.getBoolean("SpecialMode");
+        isLocked = tag.getBoolean("Locked");
     }
 
     @Override
@@ -64,8 +71,11 @@ public class TradeStationBlockTileEntity extends NormalContainerTileEntity
         purchaseInventory.ifPresent(h -> tag.put("Purchase", ((INBTSerializable<CompoundNBT>) h).serializeNBT()));
         tag.put("InputContainer", ((INBTSerializable<CompoundNBT>) inputInventory).serializeNBT());
         tag.putString("Input", input);
-        tag.putString("UUID", uuid);
+        tag.putString("UUID", uuidOwner);
+        tag.putString("UUIDStaff", uuidStaff);
+        tag.putInt("RedstoneMode", redstoneMode);
         tag.putBoolean("SpecialMode", isSpecialMode);
+        tag.putBoolean("Locked", isLocked);
         return super.write(tag);
     }
 
@@ -126,13 +136,24 @@ public class TradeStationBlockTileEntity extends NormalContainerTileEntity
 
     public boolean checkOwner(String owner)
     {
-        if (uuid.isEmpty())
+        if (uuidOwner.isEmpty())
         {
-            uuid = owner;
+            uuidOwner = owner;
             this.markDirty();
             return true;
         }
-        else return uuid.equals(owner);
+        else return uuidOwner.equals(owner);
+    }
+
+    public boolean checkStaff(String staff)
+    {
+        return !uuidStaff.isEmpty() && uuidStaff.equals(staff);
+    }
+
+    public void setStaff(String staff)
+    {
+        this.uuidStaff = staff;
+        this.markDirty();
     }
 
     public String getInput()
@@ -205,6 +226,16 @@ public class TradeStationBlockTileEntity extends NormalContainerTileEntity
         return inputIngredients;
     }
 
+    private void setToRedstoneActive()
+    {
+        if (getRedstoneMode() != 2)
+        {
+            this.getWorld().setBlockState(getPos(), getBlockState().with(TRIGGERED, true));
+            this.getWorld().getPendingBlockTicks().scheduleTick(pos, getBlockState().getBlock(), 6 * getRedstoneMode() + 2);
+        }
+
+    }
+
     public void specialPurchase(PlayerEntity playerEntity, int index)
     {
         containerInventory.ifPresent(h ->
@@ -264,6 +295,7 @@ public class TradeStationBlockTileEntity extends NormalContainerTileEntity
                 }
             }
             h.setStackInSlot(index, ItemStack.EMPTY);
+            setToRedstoneActive();
         });
     }
 
@@ -315,6 +347,7 @@ public class TradeStationBlockTileEntity extends NormalContainerTileEntity
                 purchaseInventory.ifPresent(inv -> ItemHandlerHelper.insertItemStacked(inv, get, false));
             }
             purchaseItem(playerEntity, purchaseCount);
+            setToRedstoneActive();
         });
     }
 
@@ -447,6 +480,29 @@ public class TradeStationBlockTileEntity extends NormalContainerTileEntity
             }
             return count;
         }).orElse(0);
+    }
+
+    public void switchRedstoneMode()
+    {
+        redstoneMode++;
+        redstoneMode %= 3;
+        this.markDirty();
+    }
+
+    public void lockOrUnlock()
+    {
+        isLocked = !isLocked;
+        this.markDirty();
+    }
+
+    public boolean isLocked()
+    {
+        return isLocked;
+    }
+
+    public int getRedstoneMode()
+    {
+        return redstoneMode;
     }
 
     public boolean isSpecialMode()

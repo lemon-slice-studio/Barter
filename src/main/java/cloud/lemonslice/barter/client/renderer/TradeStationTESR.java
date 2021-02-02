@@ -46,33 +46,37 @@ public class TradeStationTESR extends TileEntityRenderer<TradeStationBlockTileEn
 
                 matrixStackIn.translate(0, 0.65, 0);
 
-                for (int i = 0; i < 4; i++)
+                // Item for show.
+                if (!tileEntityIn.isLocked())
                 {
-                    matrixStackIn.push();
-                    switch (direction)
+                    for (int i = 0; i < 4; i++)
                     {
-                        case NORTH:
-                            matrixStackIn.translate(i * 0.16D + 0.26D, i * 0.001D, 0.6D);
-                            matrixStackIn.rotate(new Quaternion(Vector3f.YP, 45, true));
-                            break;
-                        case SOUTH:
-                            matrixStackIn.translate(i * 0.16D + 0.26D, i * 0.001D, 0.4D);
-                            matrixStackIn.rotate(new Quaternion(Vector3f.YP, 225, true));
-                            break;
-                        case EAST:
-                            matrixStackIn.translate(0.4D, i * 0.001D, i * 0.16D + 0.26D);
-                            matrixStackIn.rotate(new Quaternion(Vector3f.YP, 225, true));
-                            break;
-                        case WEST:
-                            matrixStackIn.translate(0.6D, i * 0.001D, i * 0.16D + 0.26D);
-                            matrixStackIn.rotate(new Quaternion(Vector3f.YP, 45, true));
-                    }
-                    matrixStackIn.scale(0.5F, 0.5F, 0.5F);
+                        matrixStackIn.push();
+                        switch (direction)
+                        {
+                            case NORTH:
+                                matrixStackIn.translate(i * 0.16D + 0.26D, i * 0.001D, 0.6D);
+                                matrixStackIn.rotate(new Quaternion(Vector3f.YP, 45, true));
+                                break;
+                            case SOUTH:
+                                matrixStackIn.translate(i * 0.16D + 0.26D, i * 0.001D, 0.4D);
+                                matrixStackIn.rotate(new Quaternion(Vector3f.YP, 225, true));
+                                break;
+                            case EAST:
+                                matrixStackIn.translate(0.4D, i * 0.001D, i * 0.16D + 0.26D);
+                                matrixStackIn.rotate(new Quaternion(Vector3f.YP, 225, true));
+                                break;
+                            case WEST:
+                                matrixStackIn.translate(0.6D, i * 0.001D, i * 0.16D + 0.26D);
+                                matrixStackIn.rotate(new Quaternion(Vector3f.YP, 45, true));
+                        }
+                        matrixStackIn.scale(0.5F, 0.5F, 0.5F);
 
-                    RenderHelper.enableStandardItemLighting();
-                    renderItem.renderItem(itemForShow, ItemCameraTransforms.TransformType.FIXED, combinedLightIn, combinedOverlayIn, matrixStackIn, bufferIn);
-                    RenderHelper.disableStandardItemLighting();
-                    matrixStackIn.pop();
+                        RenderHelper.enableStandardItemLighting();
+                        renderItem.renderItem(itemForShow, ItemCameraTransforms.TransformType.FIXED, combinedLightIn, combinedOverlayIn, matrixStackIn, bufferIn);
+                        RenderHelper.disableStandardItemLighting();
+                        matrixStackIn.pop();
+                    }
                 }
                 matrixStackIn.pop();
             }

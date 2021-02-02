@@ -26,8 +26,14 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.fml.network.NetworkHooks;
+
+import javax.annotation.Nullable;
+import java.util.Random;
+
+import static net.minecraft.state.properties.BlockStateProperties.TRIGGERED;
 
 public class NormalTradeStationBlock extends NormalHorizontalBlock
 {
@@ -37,7 +43,7 @@ public class NormalTradeStationBlock extends NormalHorizontalBlock
     public NormalTradeStationBlock(Properties properties, String name)
     {
         super(properties, name);
-        this.setDefaultState(this.getStateContainer().getBaseState().with(HORIZONTAL_FACING, Direction.NORTH).with(EDGE_TYPE, EdgeType.NONE));
+        this.setDefaultState(this.getStateContainer().getBaseState().with(HORIZONTAL_FACING, Direction.NORTH).with(EDGE_TYPE, EdgeType.NONE).with(TRIGGERED, false));
     }
 
     @Override
@@ -120,16 +126,17 @@ public class NormalTradeStationBlock extends NormalHorizontalBlock
                 if (held.getItem() == ItemsRegistry.TRADE_STATION_ADMIN_KEY)
                 {
                     NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) te, te.getPos());
+                    ((TradeStationBlockTileEntity) te).setStaff(player.getUniqueID().toString());
                     return ActionResultType.SUCCESS;
                 }
 
                 if (held.getItem() instanceof KeyItem)
                 {
-                    String owner = held.getOrCreateTag().getString("Owner");
-                    String staff = held.getOrCreateTag().getString("Staff");
-                    if ((owner.equals(player.getUniqueID().toString()) || staff.equals(player.getUniqueID().toString())) && ((TradeStationBlockTileEntity) te).checkOwner(owner))
+                    if (KeyItem.checkKey(held, player, (TradeStationBlockTileEntity) te))
                     {
                         NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) te, te.getPos());
+                        String staff = held.getOrCreateTag().getString("Staff");
+                        ((TradeStationBlockTileEntity) te).setStaff(staff);
                         return ActionResultType.SUCCESS;
                     }
                     else
@@ -148,8 +155,53 @@ public class NormalTradeStationBlock extends NormalHorizontalBlock
     }
 
     @Override
+    @SuppressWarnings("deprecation")
+    public void tick(BlockState state, ServerWorld worldIn, BlockPos pos, Random rand)
+    {
+        super.tick(state, worldIn, pos, rand);
+        worldIn.setBlockState(pos, state.with(TRIGGERED, false));
+    }
+
+    @Override
+    public boolean canConnectRedstone(BlockState state, IBlockReader world, BlockPos pos, @Nullable Direction side)
+    {
+        return true;
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public boolean canProvidePower(BlockState state)
+    {
+        return true;
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public int getWeakPower(BlockState blockState, IBlockReader blockAccess, BlockPos pos, Direction side)
+    {
+        return blockState.get(TRIGGERED) ? 15 : 0;
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public int getStrongPower(BlockState blockState, IBlockReader blockAccess, BlockPos pos, Direction side)
+    {
+        return blockState.getWeakPower(blockAccess, pos, side);
+    }
+
+    @Override
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder)
     {
-        builder.add(HORIZONTAL_FACING, EDGE_TYPE);
+        builder.add(HORIZONTAL_FACING, EDGE_TYPE, TRIGGERED);
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving)
+    {
+        if (!(newState.getBlock() instanceof NormalTradeStationBlock) || !newState.hasTileEntity())
+        {
+            worldIn.removeTileEntity(pos);
+        }
     }
 }

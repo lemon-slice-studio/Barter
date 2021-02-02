@@ -1,6 +1,8 @@
 package cloud.lemonslice.barter.common.container;
 
+import cloud.lemonslice.barter.common.block.NormalTradeStationBlock;
 import cloud.lemonslice.barter.common.tileentity.TradeStationBlockTileEntity;
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -10,6 +12,8 @@ import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.items.SlotItemHandler;
+
+import javax.annotation.Nonnull;
 
 import static cloud.lemonslice.barter.common.container.ContainerTypesRegistry.TRADE_STATION_SALE_CONTAINER;
 
@@ -23,12 +27,26 @@ public class TradeStationSaleContainer extends Container
         this.tileEntity = (TradeStationBlockTileEntity) world.getTileEntity(pos);
         tileEntity.getContainerInventory().ifPresent(h ->
         {
-            addSlot(new SlotItemHandler(h, 0, 8, 124));
+            addSlot(new SlotItemHandler(h, 0, 8, 124)
+            {
+                @Override
+                public boolean isItemValid(@Nonnull ItemStack stack)
+                {
+                    return !(Block.getBlockFromItem(stack.getItem()) instanceof NormalTradeStationBlock);
+                }
+            });
             for (int i = 2; i < 4; ++i)
             {
                 for (int j = 0; j < 9; ++j)
                 {
-                    addSlot(new SlotItemHandler(h, j + i * 9 - 17, 8 + j * 18, 16 + i * 18 + 3));
+                    addSlot(new SlotItemHandler(h, j + i * 9 - 17, 8 + j * 18, 16 + i * 18 + 3)
+                    {
+                        @Override
+                        public boolean isItemValid(@Nonnull ItemStack stack)
+                        {
+                            return !(Block.getBlockFromItem(stack.getItem()) instanceof NormalTradeStationBlock);
+                        }
+                    });
                 }
             }
         });
@@ -38,7 +56,14 @@ public class TradeStationSaleContainer extends Container
             {
                 for (int j = 0; j < 9; ++j)
                 {
-                    addSlot(new SlotItemHandler(h, j + i * 9, 8 + j * 18, 16 + i * 18));
+                    addSlot(new SlotItemHandler(h, j + i * 9, 8 + j * 18, 16 + i * 18)
+                    {
+                        @Override
+                        public boolean isItemValid(@Nonnull ItemStack stack)
+                        {
+                            return !(Block.getBlockFromItem(stack.getItem()) instanceof NormalTradeStationBlock);
+                        }
+                    });
                 }
             }
         });

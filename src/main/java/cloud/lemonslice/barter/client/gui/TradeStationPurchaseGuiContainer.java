@@ -1,12 +1,12 @@
 package cloud.lemonslice.barter.client.gui;
 
 import cloud.lemonslice.barter.Barter;
-import cloud.lemonslice.barter.client.widget.IconButton;
 import cloud.lemonslice.barter.common.container.TradeStationPurchaseContainer;
 import cloud.lemonslice.barter.network.SimpleNetworkHandler;
 import cloud.lemonslice.barter.network.client.TradeStationPurchaseMessage;
 import cloud.lemonslice.barter.network.client.TradeStationSpecialPurchaseMessage;
 import cloud.lemonslice.silveroak.client.texture.TexturePos;
+import cloud.lemonslice.silveroak.client.widget.IconButton;
 import cloud.lemonslice.silveroak.helper.GuiHelper;
 import com.google.common.collect.Lists;
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -30,9 +30,15 @@ public class TradeStationPurchaseGuiContainer extends ContainerScreen<TradeStati
 {
     private static final String TEXTURE_PATH = "textures/gui/trade_purchase_gui.png";
     private static final ResourceLocation TEXTURE = new ResourceLocation(MODID, TEXTURE_PATH);
+
     private TradeStationPurchaseContainer container;
+    private int offsetX;
+    private int offsetY;
+    private boolean GUIInit = false;
+
     private int indexForShow = 0;
     private int indexToBuy = 0;
+
     private IconButton buttonCheck;
     private IconButton buttonUp;
     private IconButton buttonDown;
@@ -46,15 +52,12 @@ public class TradeStationPurchaseGuiContainer extends ContainerScreen<TradeStati
 
     protected void initWidgets()
     {
-        int i = (this.width - this.xSize) / 2;
-        int j = (this.height - this.ySize) / 2;
-
-        this.buttonCheck = new IconButton(i + 119, j + 36, 22, 22, new TranslationTextComponent("container.barter.trade_station.purchase_check"), button -> purchase(), this::buttonCheckTooltip);
+        this.buttonCheck = new IconButton(offsetX + 119, offsetY + 36, 22, 22, new TranslationTextComponent("tooltip.barter.trade_station.purchase_check"), button -> purchase(), this::buttonCheckTooltip);
         this.children.add(this.buttonCheck);
 
-        this.buttonUp = new IconButton(i + 144, j + 6, 10, 10, new TranslationTextComponent("container.barter.trade_station.choose_up"), button -> chooseNext(), this::buttonUpTooltip);
+        this.buttonUp = new IconButton(offsetX + 144, offsetY + 6, 10, 10, new TranslationTextComponent("tooltip.barter.trade_station.choose_up"), button -> chooseNext(), this::buttonUpTooltip);
         this.children.add(this.buttonUp);
-        this.buttonDown = new IconButton(i + 144, j + 18, 10, 10, new TranslationTextComponent("container.barter.trade_station.choose_down"), button -> choosePrevious(), this::buttonDownTooltip);
+        this.buttonDown = new IconButton(offsetX + 144, offsetY + 18, 10, 10, new TranslationTextComponent("tooltip.barter.trade_station.choose_down"), button -> choosePrevious(), this::buttonDownTooltip);
         this.children.add(this.buttonDown);
     }
 
@@ -62,14 +65,21 @@ public class TradeStationPurchaseGuiContainer extends ContainerScreen<TradeStati
     protected void init()
     {
         super.init();
+        this.offsetX = (this.width - this.xSize) / 2;
+        this.offsetY = (this.height - this.ySize) / 2;
         this.initWidgets();
+        tickShowing();
     }
 
     @Override
     public void tick()
     {
         super.tick();
-        tickShowing();
+        if (Barter.PROXY.getClientWorld().getWorldInfo().getGameTime() % 20 == 0 || !GUIInit)
+        {
+            tickShowing();
+            this.GUIInit = true;
+        }
         if (!getContainer().getTileEntity().isSpecialMode())
         {
             this.buttonUp.active = false;
@@ -113,21 +123,18 @@ public class TradeStationPurchaseGuiContainer extends ContainerScreen<TradeStati
     private void tickShowing()
     {
         List<Pair<Ingredient, Integer>> list = container.getTileEntity().getInputIngredients();
-        if (Barter.PROXY.getClientWorld().getGameTime() % 20 == 0 || (list.size() > 0 && container.showing.getStackInSlot(0).isEmpty()))
+        for (int i = 0; i < list.size(); i++)
         {
-            for (int i = 0; i < list.size(); i++)
-            {
-                Pair<Ingredient, Integer> pair = list.get(i);
-                ItemStack forShow = pair.getFirst().getMatchingStacks()[indexForShow % pair.getFirst().getMatchingStacks().length].copy();
-                forShow.setCount(pair.getSecond());
-                container.showing.setStackInSlot(i, forShow);
-            }
-            if (container.getTileEntity().isSpecialMode())
-                container.getTileEntity().getContainerInventory().ifPresent(h -> container.showing.setStackInSlot(4, h.getStackInSlot(indexToBuy)));
-            else
-                container.getTileEntity().getContainerInventory().ifPresent(h -> container.showing.setStackInSlot(4, h.getStackInSlot(0)));
-            indexForShow++;
+            Pair<Ingredient, Integer> pair = list.get(i);
+            ItemStack forShow = pair.getFirst().getMatchingStacks()[indexForShow % pair.getFirst().getMatchingStacks().length].copy();
+            forShow.setCount(pair.getSecond());
+            container.showing.setStackInSlot(i, forShow);
         }
+        if (container.getTileEntity().isSpecialMode())
+            container.getTileEntity().getContainerInventory().ifPresent(h -> container.showing.setStackInSlot(4, h.getStackInSlot(indexToBuy)));
+        else
+            container.getTileEntity().getContainerInventory().ifPresent(h -> container.showing.setStackInSlot(4, h.getStackInSlot(0)));
+        indexForShow++;
     }
 
     @Override
@@ -142,19 +149,32 @@ public class TradeStationPurchaseGuiContainer extends ContainerScreen<TradeStati
     {
         if (button.isHovered())
         {
+            if (getContainer().getTileEntity().isLocked())
+            {
+                GuiHelper.drawTooltip(this, matrixStack, mouseX, mouseY, offsetX + 119, offsetY + 36, 22, 22, Lists.newArrayList(new TranslationTextComponent("tooltip.barter.trade_station.closed").mergeStyle(TextFormatting.RED)));
+                return;
+            }
             container.refreshRemain();
             int canPurchase = container.getTileEntity().canPurchaseMuch(container.getPurchaseCount());
+            List<ITextComponent> list = Lists.newArrayList(button.getMessage());
             if (canPurchase != container.getPurchaseCount())
             {
-                GuiHelper.drawTooltip(this, matrixStack, mouseX, mouseY, (this.width - this.xSize) / 2 + 119, (this.height - this.ySize) / 2 + 36, 22, 22, Lists.newArrayList(button.getMessage(), new TranslationTextComponent("container.barter.trade_station.purchase_count", canPurchase), new TranslationTextComponent("container.barter.trade_station.remaining_count", container.getRemainCount()), new TranslationTextComponent("container.barter.trade_station.storage_full").mergeStyle(TextFormatting.RED)));
+                list.add(new TranslationTextComponent("tooltip.barter.trade_station.purchase_count", canPurchase));
+                list.add(new TranslationTextComponent("tooltip.barter.trade_station.remaining_count", container.getRemainCount()));
+                list.add(new TranslationTextComponent("tooltip.barter.trade_station.storage_full").mergeStyle(TextFormatting.RED));
+                GuiHelper.drawTooltip(this, matrixStack, mouseX, mouseY, offsetX + 119, offsetY + 36, 22, 22, list);
                 return;
             }
             if (container.getTileEntity().isSpecialMode() && container.getTileEntity().hasEnough() || container.getTileEntity().hasExtraEnough())
             {
-                GuiHelper.drawTooltip(this, matrixStack, mouseX, mouseY, (this.width - this.xSize) / 2 + 119, (this.height - this.ySize) / 2 + 36, 22, 22, Lists.newArrayList(button.getMessage(), new TranslationTextComponent("container.barter.trade_station.purchase_count", container.getPurchaseCount()), new TranslationTextComponent("container.barter.trade_station.remaining_count", container.getRemainCount())));
+                list.add(new TranslationTextComponent("tooltip.barter.trade_station.purchase_count", canPurchase));
+                list.add(new TranslationTextComponent("tooltip.barter.trade_station.remaining_count", container.getRemainCount()));
             }
             else
-                GuiHelper.drawTooltip(this, matrixStack, mouseX, mouseY, (this.width - this.xSize) / 2 + 119, (this.height - this.ySize) / 2 + 36, 22, 22, Lists.newArrayList(button.getMessage(), new TranslationTextComponent("container.barter.trade_station.not_enough").mergeStyle(TextFormatting.RED)));
+            {
+                list.add(new TranslationTextComponent("tooltip.barter.trade_station.not_enough").mergeStyle(TextFormatting.RED));
+            }
+            GuiHelper.drawTooltip(this, matrixStack, mouseX, mouseY, offsetX + 119, offsetY + 36, 22, 22, list);
         }
     }
 
@@ -162,7 +182,7 @@ public class TradeStationPurchaseGuiContainer extends ContainerScreen<TradeStati
     {
         if (button.active && button.isHovered())
         {
-            GuiHelper.drawTooltip(this, matrixStack, mouseX, mouseY, (this.width - this.xSize) / 2 + 144, (this.height - this.ySize) / 2 + 6, 10, 10, Lists.newArrayList(button.getMessage()));
+            GuiHelper.drawTooltip(this, matrixStack, mouseX, mouseY, offsetX + 144, offsetY + 6, 10, 10, Lists.newArrayList(button.getMessage()));
         }
     }
 
@@ -170,22 +190,25 @@ public class TradeStationPurchaseGuiContainer extends ContainerScreen<TradeStati
     {
         if (button.active && button.isHovered())
         {
-            GuiHelper.drawTooltip(this, matrixStack, mouseX, mouseY, (this.width - this.xSize) / 2 + 144, (this.height - this.ySize) / 2 + 18, 10, 10, Lists.newArrayList(button.getMessage()));
+            GuiHelper.drawTooltip(this, matrixStack, mouseX, mouseY, offsetX + 144, offsetY + 18, 10, 10, Lists.newArrayList(button.getMessage()));
         }
     }
 
     private void purchase()
     {
-        if (getContainer().getTileEntity().isSpecialMode())
+        if (!getContainer().getTileEntity().isLocked())
         {
-            SimpleNetworkHandler.CHANNEL.sendToServer(new TradeStationSpecialPurchaseMessage(getContainer().getTileEntity().getPos(), indexToBuy));
-            if (indexToBuy != 0)
+            if (getContainer().getTileEntity().isSpecialMode())
             {
-                chooseNext();
+                SimpleNetworkHandler.CHANNEL.sendToServer(new TradeStationSpecialPurchaseMessage(getContainer().getTileEntity().getPos(), indexToBuy));
+                if (indexToBuy != 0)
+                {
+                    chooseNext();
+                }
             }
+            else
+                SimpleNetworkHandler.CHANNEL.sendToServer(new TradeStationPurchaseMessage(getContainer().getTileEntity().getPos()));
         }
-        else
-            SimpleNetworkHandler.CHANNEL.sendToServer(new TradeStationPurchaseMessage(getContainer().getTileEntity().getPos()));
     }
 
     @Override
@@ -193,38 +216,18 @@ public class TradeStationPurchaseGuiContainer extends ContainerScreen<TradeStati
     {
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 
-        int offsetX = (width - xSize) / 2, offsetY = (height - ySize) / 2;
         GuiHelper.drawLayer(matrixStack, offsetX, offsetY, TEXTURE, new TexturePos(0, 0, xSize, ySize));
 
-        buttonCheck.render(matrixStack, mouseX, mouseY, partialTicks);
-        GuiHelper.drawLayer(matrixStack, offsetX + 119, offsetY + 36, TEXTURE, new TexturePos(186, 0, 22, 22));
-        if (buttonCheck.isPressed())
-        {
-            GuiHelper.drawLayer(matrixStack, offsetX + 119, offsetY + 36, TEXTURE, new TexturePos(186, 44, 22, 22));
-        }
-        else if (buttonCheck.isHovered())
-        {
-            GuiHelper.drawLayer(matrixStack, offsetX + 119, offsetY + 36, TEXTURE, new TexturePos(186, 22, 22, 22));
-        }
+        GuiHelper.renderIconButton(matrixStack, partialTicks, mouseX, mouseY, TEXTURE, buttonCheck, new TexturePos(186, 0, buttonCheck.getWidth(), buttonCheck.getHeightRealms()), new TexturePos(186, 22, buttonCheck.getWidth(), buttonCheck.getHeightRealms()), new TexturePos(186, 44, buttonCheck.getWidth(), buttonCheck.getHeightRealms()));
 
         if (buttonUp.active)
         {
-            buttonUp.render(matrixStack, mouseX, mouseY, partialTicks);
-            GuiHelper.drawLayer(matrixStack, offsetX + 144, offsetY + 6, TEXTURE, new TexturePos(176, 0, 10, 10));
-            if (buttonUp.isHovered())
-            {
-                GuiHelper.drawLayer(matrixStack, offsetX + 144, offsetY + 6, TEXTURE, new TexturePos(176, 10, 10, 10));
-            }
+            GuiHelper.renderButton(matrixStack, partialTicks, mouseX, mouseY, TEXTURE, buttonUp, new TexturePos(176, 0, buttonUp.getWidth(), buttonUp.getHeightRealms()), new TexturePos(176, 10, buttonUp.getWidth(), buttonUp.getHeightRealms()));
         }
 
         if (buttonDown.active)
         {
-            buttonDown.render(matrixStack, mouseX, mouseY, partialTicks);
-            GuiHelper.drawLayer(matrixStack, offsetX + 144, offsetY + 18, TEXTURE, new TexturePos(176, 20, 10, 10));
-            if (buttonDown.isHovered())
-            {
-                GuiHelper.drawLayer(matrixStack, offsetX + 144, offsetY + 18, TEXTURE, new TexturePos(176, 30, 10, 10));
-            }
+            GuiHelper.renderButton(matrixStack, partialTicks, mouseX, mouseY, TEXTURE, buttonDown, new TexturePos(176, 20, buttonDown.getWidth(), buttonDown.getHeightRealms()), new TexturePos(176, 30, buttonDown.getWidth(), buttonDown.getHeightRealms()));
         }
     }
 

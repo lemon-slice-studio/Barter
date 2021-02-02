@@ -1,5 +1,6 @@
 package cloud.lemonslice.barter.common.item;
 
+import cloud.lemonslice.barter.common.tileentity.TradeStationBlockTileEntity;
 import cloud.lemonslice.silveroak.common.item.NormalItem;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
@@ -51,5 +52,12 @@ public class KeyItem extends NormalItem
         {
             tooltip.add(new TranslationTextComponent("tooltip.barter.key.owner", nbt.getString("OwnerName")).mergeStyle(TextFormatting.GRAY));
         }
+    }
+
+    public static boolean checkKey(ItemStack held, PlayerEntity player, TradeStationBlockTileEntity te)
+    {
+        String owner = held.getOrCreateTag().getString("Owner");
+        String staff = held.getOrCreateTag().getString("Staff");
+        return ((owner.equals(player.getUniqueID().toString()) || staff.equals(player.getUniqueID().toString())) && te.checkOwner(owner));
     }
 }

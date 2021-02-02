@@ -47,10 +47,10 @@ public class TradeStationSpecialPurchaseMessage implements INormalMessage
                 if (world.isAreaLoaded(pos, 1))
                 {
                     TileEntity te = world.getTileEntity(pos);
-                    if (te instanceof TradeStationBlockTileEntity)
+                    String uuid = ctx.getSender().getUniqueID().toString();
+                    if (te instanceof TradeStationBlockTileEntity && (((TradeStationBlockTileEntity) te).checkOwner(uuid) || ((TradeStationBlockTileEntity) te).checkStaff(uuid)) && !((TradeStationBlockTileEntity) te).isLocked())
                     {
                         ((TradeStationBlockTileEntity) te).specialPurchase(ctx.getSender(), index);
-                        te.markDirty();
                     }
                 }
             });

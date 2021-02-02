@@ -1,8 +1,6 @@
 package cloud.lemonslice.barter.network;
 
-import cloud.lemonslice.barter.network.client.TradeStationPurchaseMessage;
-import cloud.lemonslice.barter.network.client.TradeStationSpecialPurchaseMessage;
-import cloud.lemonslice.barter.network.client.TradeStationTextChangeMessage;
+import cloud.lemonslice.barter.network.client.*;
 import cloud.lemonslice.silveroak.network.INormalMessage;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.ResourceLocation;
@@ -24,6 +22,8 @@ public final class SimpleNetworkHandler
         registerMessage(id++, TradeStationTextChangeMessage.class, TradeStationTextChangeMessage::new);
         registerMessage(id++, TradeStationPurchaseMessage.class, TradeStationPurchaseMessage::new);
         registerMessage(id++, TradeStationSpecialPurchaseMessage.class, TradeStationSpecialPurchaseMessage::new);
+        registerMessage(id++, TradeStationSwitchRedstoneMessage.class, TradeStationSwitchRedstoneMessage::new);
+        registerMessage(id++, TradeStationLockMessage.class, TradeStationLockMessage::new);
     }
 
     private static <T extends INormalMessage> void registerMessage(int index, Class<T> messageType, Function<PacketBuffer, T> decoder)

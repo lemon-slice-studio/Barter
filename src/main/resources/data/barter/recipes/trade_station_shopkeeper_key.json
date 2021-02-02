@@ -2,9 +2,9 @@
     "type": "minecraft:crafting_shaped",
     "group": "trade_station_shopkeeper_key",
     "pattern": [
-        "*  ",
-        " x ",
-        "  x"
+        "+  ",
+        " *x",
+        "  *"
     ],
     "key": {
         "*": {
@@ -12,6 +12,9 @@
         },
         "x": {
             "tag": "forge:nuggets/gold"
+        },
+        "+": {
+            "tag": "forge:storage_blocks/gold"
         }
     },
     "result": {
