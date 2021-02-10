@@ -15,18 +15,18 @@ description = '''This is a simple mod that allows players to barter.'''
 [[dependencies.barter]]
 modId = "forge"
 mandatory = true
-versionRange = "[33,)"
+versionRange = "[34,)"
 ordering = "NONE"
 side = "BOTH"
 [[dependencies.barter]]
 modId = "minecraft"
 mandatory = true
-versionRange = "[1.16.2,1.17)"
+versionRange = "[1.16.3,1.17)"
 ordering = "NONE"
 side = "BOTH"
 [[dependencies.barter]]
 modId = "silveroakoutpost"
 mandatory = true
-versionRange = "[0.3.2-Alpha,)"
+versionRange = "[0.3.5-Alpha,)"
 ordering = "NONE"
 side = "BOTH"
