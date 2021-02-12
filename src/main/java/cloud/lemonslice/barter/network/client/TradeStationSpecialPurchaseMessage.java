@@ -48,7 +48,7 @@ public class TradeStationSpecialPurchaseMessage implements INormalMessage
                 {
                     TileEntity te = world.getTileEntity(pos);
                     String uuid = ctx.getSender().getUniqueID().toString();
-                    if (te instanceof TradeStationBlockTileEntity && (((TradeStationBlockTileEntity) te).checkOwner(uuid) || ((TradeStationBlockTileEntity) te).checkStaff(uuid)) && !((TradeStationBlockTileEntity) te).isLocked())
+                    if (te instanceof TradeStationBlockTileEntity && !((TradeStationBlockTileEntity) te).isLocked())
                     {
                         ((TradeStationBlockTileEntity) te).specialPurchase(ctx.getSender(), index);
                     }
