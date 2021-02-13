@@ -276,7 +276,7 @@ public class TradeStationBlockTileEntity extends NormalContainerTileEntity
 
             for (int i = 0; i < inputIngredients.size(); i++)
             {
-                ItemStack get = inputInventory.extractItem(i, purchaseCount, false);
+                ItemStack get = inputInventory.extractItem(i, purchaseCount * inputIngredients.get(i).getSecond(), false);
                 purchaseInventory.ifPresent(inv -> ItemHandlerHelper.insertItemStacked(inv, get, false));
             }
             ItemHandlerHelper.giveItemToPlayer(playerEntity, h.getStackInSlot(index));
