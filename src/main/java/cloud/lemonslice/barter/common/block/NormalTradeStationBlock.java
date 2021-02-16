@@ -1,5 +1,6 @@
 package cloud.lemonslice.barter.common.block;
 
+import cloud.lemonslice.barter.common.handler.ItemStackHelper;
 import cloud.lemonslice.barter.common.item.ItemsRegistry;
 import cloud.lemonslice.barter.common.item.KeyItem;
 import cloud.lemonslice.barter.common.tileentity.TileEntityTypesRegistry;
@@ -199,6 +200,13 @@ public class NormalTradeStationBlock extends NormalHorizontalBlock
     @SuppressWarnings("deprecation")
     public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving)
     {
+        if (!worldIn.isRemote && !(newState.getBlock() instanceof NormalTradeStationBlock))
+        {
+            TileEntity te = worldIn.getTileEntity(pos);
+            ItemStack item = new ItemStack(state.getBlock());
+            ItemStackHelper.storeTEInStack(item, te);
+            Block.spawnAsEntity(worldIn, pos, item);
+        }
         if (!(newState.getBlock() instanceof NormalTradeStationBlock) || !newState.hasTileEntity())
         {
             worldIn.removeTileEntity(pos);

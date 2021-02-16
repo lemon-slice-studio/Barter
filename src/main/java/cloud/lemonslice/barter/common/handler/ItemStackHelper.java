@@ -11,6 +11,7 @@ public class ItemStackHelper
 {
     public static ItemStack storeTEInStack(ItemStack stack, TileEntity te)
     {
+        if (te == null) return stack;
         CompoundNBT nbt = te.write(new CompoundNBT());
         if (stack.getItem() instanceof SkullItem && nbt.contains("SkullOwner"))
         {
