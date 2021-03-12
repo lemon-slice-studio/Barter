@@ -24,6 +24,11 @@ public class KeyItem extends NormalItem
         super(name, ITEM_GROUP);
     }
 
+    public KeyItem(String name, Properties properties)
+    {
+        super(name, properties.group(ITEM_GROUP));
+    }
+
     @Override
     public void onCreated(ItemStack stack, World worldIn, PlayerEntity playerIn)
     {

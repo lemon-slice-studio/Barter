@@ -1,6 +1,6 @@
 package cloud.lemonslice.barter.common.handler;
 
-import cloud.lemonslice.barter.common.block.NormalTradeStationBlock;
+import cloud.lemonslice.barter.common.block.TradeStationBlock;
 import cloud.lemonslice.barter.common.item.ItemsRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -16,7 +16,7 @@ public final class EventHandler
     @SubscribeEvent
     public static void onBlockRightClick(PlayerInteractEvent.RightClickBlock event)
     {
-        if (event.getWorld().getBlockState(event.getPos()).getBlock() instanceof NormalTradeStationBlock)
+        if (event.getWorld().getBlockState(event.getPos()).getBlock() instanceof TradeStationBlock)
         {
             event.setUseBlock(Event.Result.ALLOW);
         }
@@ -26,7 +26,7 @@ public final class EventHandler
     public static void onBlockLeftClick(PlayerInteractEvent.LeftClickBlock event)
     {
         BlockState state = event.getWorld().getBlockState(event.getPos());
-        if (state.getBlock() instanceof NormalTradeStationBlock)
+        if (state.getBlock() instanceof TradeStationBlock)
         {
             ItemStack held = event.getPlayer().getHeldItem(event.getHand());
             if (held.getItem() == ItemsRegistry.TRADE_STATION_ADMIN_KEY)

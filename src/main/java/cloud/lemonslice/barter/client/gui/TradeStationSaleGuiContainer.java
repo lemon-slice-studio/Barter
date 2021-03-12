@@ -1,6 +1,7 @@
 package cloud.lemonslice.barter.client.gui;
 
 import cloud.lemonslice.barter.Barter;
+import cloud.lemonslice.barter.common.block.WoodenTradeStationBlock;
 import cloud.lemonslice.barter.common.container.TradeStationSaleContainer;
 import cloud.lemonslice.barter.network.SimpleNetworkHandler;
 import cloud.lemonslice.barter.network.client.TradeStationLockMessage;
@@ -65,6 +66,10 @@ public class TradeStationSaleGuiContainer extends ContainerScreen<TradeStationSa
 
         this.buttonRedstone = new IconButton(offsetX + 147, offsetY + 121, 22, 22, new TranslationTextComponent("tooltip.barter.trade_station.redstone"), button -> switchRedstoneMode(), this::buttonRedstoneTooltip);
         this.children.add(this.buttonRedstone);
+        if (container.getTileEntity().getBlockState().getBlock() instanceof WoodenTradeStationBlock)
+        {
+            buttonRedstone.active = false;
+        }
 
         this.buttonLock = new IconButton(offsetX + 123, offsetY + 121, 22, 22, new TranslationTextComponent("tooltip.barter.trade_station.lock"), button -> switchLock(), this::buttonLockTooltip);
         this.children.add(this.buttonLock);

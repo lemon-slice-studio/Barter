@@ -1,6 +1,6 @@
 package cloud.lemonslice.barter.common.container;
 
-import cloud.lemonslice.barter.common.block.NormalTradeStationBlock;
+import cloud.lemonslice.barter.common.block.TradeStationBlock;
 import cloud.lemonslice.barter.common.tileentity.TradeStationBlockTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.PlayerEntity;
@@ -32,7 +32,7 @@ public class TradeStationSaleContainer extends Container
                 @Override
                 public boolean isItemValid(@Nonnull ItemStack stack)
                 {
-                    return !(Block.getBlockFromItem(stack.getItem()) instanceof NormalTradeStationBlock);
+                    return !(Block.getBlockFromItem(stack.getItem()) instanceof TradeStationBlock);
                 }
             });
             for (int i = 2; i < 4; ++i)
@@ -44,7 +44,7 @@ public class TradeStationSaleContainer extends Container
                         @Override
                         public boolean isItemValid(@Nonnull ItemStack stack)
                         {
-                            return !(Block.getBlockFromItem(stack.getItem()) instanceof NormalTradeStationBlock);
+                            return !(Block.getBlockFromItem(stack.getItem()) instanceof TradeStationBlock);
                         }
                     });
                 }
@@ -61,7 +61,7 @@ public class TradeStationSaleContainer extends Container
                         @Override
                         public boolean isItemValid(@Nonnull ItemStack stack)
                         {
-                            return !(Block.getBlockFromItem(stack.getItem()) instanceof NormalTradeStationBlock);
+                            return !(Block.getBlockFromItem(stack.getItem()) instanceof TradeStationBlock);
                         }
                     });
                 }

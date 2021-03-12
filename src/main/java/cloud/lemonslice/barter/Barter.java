@@ -8,7 +8,6 @@ import cloud.lemonslice.barter.common.group.BarterGroup;
 import cloud.lemonslice.barter.common.item.ItemsRegistry;
 import cloud.lemonslice.barter.common.tileentity.TileEntityTypesRegistry;
 import cloud.lemonslice.barter.network.SimpleNetworkHandler;
-import cloud.lemonslice.silveroak.SilveroakOutpost;
 import net.minecraft.item.ItemGroup;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -46,7 +45,6 @@ public final class Barter
         CommonProxy.registerCompostable();
         CommonProxy.registerFireInfo();
         SimpleNetworkHandler.init();
-        SilveroakOutpost.needVerification();
     }
 
     private void doClientStuff(final FMLClientSetupEvent event)

@@ -40,7 +40,7 @@ public class TradeStationBlockTileEntity extends NormalContainerTileEntity
     private String uuidStaff = "";
     private String input = "";
     private int check = 0;
-    private int redstoneMode = 0; // 0 for short pulse; 1 for long pulse; 2 for none.
+    private int redstoneMode = 2; // 0 for short pulse; 1 for long pulse; 2 for none.
     private boolean isSpecialMode = false;
     private boolean isLocked = false;
 
@@ -77,11 +77,6 @@ public class TradeStationBlockTileEntity extends NormalContainerTileEntity
         tag.putBoolean("SpecialMode", isSpecialMode);
         tag.putBoolean("Locked", isLocked);
         return super.write(tag);
-    }
-
-    public LazyOptional<ItemStackHandler> getContainerInventory()
-    {
-        return containerInventory;
     }
 
     private ItemStackHandler createItemHandler(int size)
@@ -518,5 +513,10 @@ public class TradeStationBlockTileEntity extends NormalContainerTileEntity
     public LazyOptional<ItemStackHandler> getPurchaseInventory()
     {
         return purchaseInventory;
+    }
+
+    public LazyOptional<ItemStackHandler> getContainerInventory()
+    {
+        return containerInventory;
     }
 }

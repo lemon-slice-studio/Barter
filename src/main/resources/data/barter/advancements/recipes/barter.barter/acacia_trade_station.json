@@ -1,0 +1,32 @@
+{
+    "parent": "minecraft:recipes/root",
+    "rewards": {
+        "recipes": [
+            "barter:acacia_trade_station"
+        ]
+    },
+    "criteria": {
+        "has_planks": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "minecraft:acacia_slab"
+                    }
+                ]
+            }
+        },
+        "has_the_recipe": {
+            "trigger": "minecraft:recipe_unlocked",
+            "conditions": {
+                "recipe": "barter:acacia_trade_station"
+            }
+        }
+    },
+    "requirements": [
+        [
+            "has_planks",
+            "has_the_recipe"
+        ]
+    ]
+}

@@ -36,12 +36,12 @@ import java.util.Random;
 
 import static net.minecraft.state.properties.BlockStateProperties.TRIGGERED;
 
-public class NormalTradeStationBlock extends NormalHorizontalBlock
+public class TradeStationBlock extends NormalHorizontalBlock
 {
     public static final EnumProperty<EdgeType> EDGE_TYPE = EnumProperty.create("edge", EdgeType.class);
     protected static final VoxelShape SHAPE = VoxelShapeHelper.createVoxelShape(0, 0, 0, 16, 8, 16);
 
-    public NormalTradeStationBlock(Properties properties, String name)
+    public TradeStationBlock(Properties properties, String name)
     {
         super(properties, name);
         this.setDefaultState(this.getStateContainer().getBaseState().with(HORIZONTAL_FACING, Direction.NORTH).with(EDGE_TYPE, EdgeType.NONE).with(TRIGGERED, false));
@@ -138,6 +138,10 @@ public class NormalTradeStationBlock extends NormalHorizontalBlock
                         NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) te, te.getPos());
                         String staff = held.getOrCreateTag().getString("Staff");
                         ((TradeStationBlockTileEntity) te).setStaff(staff);
+                        if (held.isDamageable())
+                        {
+                            held.damageItem(1, player, playerEntity -> playerEntity.sendBreakAnimation(playerEntity.getActiveHand()));
+                        }
                         return ActionResultType.SUCCESS;
                     }
                     else
@@ -200,14 +204,14 @@ public class NormalTradeStationBlock extends NormalHorizontalBlock
     @SuppressWarnings("deprecation")
     public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving)
     {
-        if (!worldIn.isRemote && !(newState.getBlock() instanceof NormalTradeStationBlock))
+        if (!worldIn.isRemote && !(newState.getBlock() instanceof TradeStationBlock))
         {
             TileEntity te = worldIn.getTileEntity(pos);
             ItemStack item = new ItemStack(state.getBlock());
             ItemStackHelper.storeTEInStack(item, te);
             Block.spawnAsEntity(worldIn, pos, item);
         }
-        if (!(newState.getBlock() instanceof NormalTradeStationBlock) || !newState.hasTileEntity())
+        if (!(newState.getBlock() instanceof TradeStationBlock) || !newState.hasTileEntity())
         {
             worldIn.removeTileEntity(pos);
         }

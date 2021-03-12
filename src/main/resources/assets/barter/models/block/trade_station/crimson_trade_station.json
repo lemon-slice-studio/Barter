@@ -1,0 +1,6 @@
+{
+    "parent": "barter:block/trade_station/trade_station_wooden_base",
+    "textures": {
+        "side": "block/crimson_planks"
+    }
+}

@@ -14,7 +14,7 @@
             "item": "minecraft:obsidian"
         },
         "+": {
-            "item": "minecraft:trapped_chest"
+            "item": "minecraft:shulker_box"
         },
         "x": {
             "item": "minecraft:smooth_stone_slab"

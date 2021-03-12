@@ -12,11 +12,18 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 import java.util.List;
 
+import static cloud.lemonslice.barter.Barter.ITEM_GROUP;
+
 public class StaffKeyItem extends KeyItem
 {
     public StaffKeyItem(String name)
     {
         super(name);
+    }
+
+    public StaffKeyItem(String name, Properties properties)
+    {
+        super(name, properties.group(ITEM_GROUP));
     }
 
     @Override

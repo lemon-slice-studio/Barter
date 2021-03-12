@@ -1,0 +1,6 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "barter:item/wooden_trade_station_shopkeeper_key"
+    }
+}
