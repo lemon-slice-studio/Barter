@@ -126,6 +126,10 @@ public class TradeStationPurchaseGuiContainer extends ContainerScreen<TradeStati
         for (int i = 0; i < list.size(); i++)
         {
             Pair<Ingredient, Integer> pair = list.get(i);
+            if (pair.getFirst().hasNoMatchingItems())
+            {
+                continue;
+            }
             ItemStack forShow = pair.getFirst().getMatchingStacks()[indexForShow % pair.getFirst().getMatchingStacks().length].copy();
             forShow.setCount(pair.getSecond());
             container.showing.setStackInSlot(i, forShow);
@@ -135,6 +139,7 @@ public class TradeStationPurchaseGuiContainer extends ContainerScreen<TradeStati
         else
             container.getTileEntity().getContainerInventory().ifPresent(h -> container.showing.setStackInSlot(4, h.getStackInSlot(0)));
         indexForShow++;
+        indexForShow %= 49999;
     }
 
     @Override

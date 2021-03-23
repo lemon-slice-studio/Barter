@@ -1,0 +1,23 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "group": "appraisal_table",
+    "pattern": [
+        " + ",
+        "***",
+        "xxx"
+    ],
+    "key": {
+        "*": {
+            "item": "minecraft:light_blue_carpet"
+        },
+        "+": {
+            "tag": "forge:glass_panes/colorless"
+        },
+        "x": {
+            "item": "minecraft:smooth_stone_slab"
+        }
+    },
+    "result": {
+        "item": "barter:light_blue_appraisal_table"
+    }
+}

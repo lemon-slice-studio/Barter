@@ -14,6 +14,7 @@ public final class TileEntityTypesRegistry extends RegistryModule
                     LIGHT_GRAY_TRADE_STATION, CYAN_TRADE_STATION, PURPLE_TRADE_STATION, BLUE_TRADE_STATION,
                     BROWN_TRADE_STATION, GREEN_TRADE_STATION, RED_TRADE_STATION, BLACK_TRADE_STATION,
 
-                    OAK_TRADE_STATION)
-                    .build(null).setRegistryName("normal_trade_station");
+                    OAK_TRADE_STATION, ACACIA_TRADE_STATION, BIRCH_TRADE_STATION, CRIMSON_TRADE_STATION,
+                    DARK_OAK_TRADE_STATION, JUNGLE_TRADE_STATION, OAK_TRADE_STATION, SPRUCE_TRADE_STATION,
+                    WARPED_TRADE_STATION).build(null).setRegistryName("normal_trade_station");
 }

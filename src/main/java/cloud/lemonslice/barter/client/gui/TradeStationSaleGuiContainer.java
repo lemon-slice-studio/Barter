@@ -51,8 +51,7 @@ public class TradeStationSaleGuiContainer extends ContainerScreen<TradeStationSa
     {
         this.minecraft.keyboardListener.enableRepeatEvents(true);
 
-        this.nameField = new TextFieldWidget(this.font, offsetX + 62, offsetY + 101, 104, 12, new TranslationTextComponent("container.barter.trade_station.sale"));
-        this.nameField.setCanLoseFocus(true);
+        this.nameField = new TextFieldWidget(this.font, offsetX + 61, offsetY + 101, 100, 12, new TranslationTextComponent("container.barter.trade_station.sale"));
         this.nameField.setTextColor(-1);
         this.nameField.setDisabledTextColour(-1);
         this.nameField.setResponder(this::whileTyping);

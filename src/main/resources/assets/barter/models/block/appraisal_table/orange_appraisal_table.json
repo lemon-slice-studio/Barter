@@ -1,0 +1,6 @@
+{
+    "parent": "barter:block/appraisal_table/appraisal_table_base",
+    "textures": {
+        "side": "block/orange_wool"
+    }
+}

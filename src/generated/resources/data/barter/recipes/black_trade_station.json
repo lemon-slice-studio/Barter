@@ -4,7 +4,7 @@
     "pattern": [
         "***",
         "-+-",
-        "xxx"
+        "x#x"
     ],
     "key": {
         "*": {
@@ -18,6 +18,9 @@
         },
         "x": {
             "item": "minecraft:smooth_stone_slab"
+        },
+        "#": {
+            "tag": "forge:dusts/redstone"
         }
     },
     "result": {

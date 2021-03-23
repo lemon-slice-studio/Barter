@@ -1,0 +1,32 @@
+{
+    "parent": "minecraft:recipes/root",
+    "rewards": {
+        "recipes": [
+            "barter:light_gray_appraisal_table"
+        ]
+    },
+    "criteria": {
+        "has_pane": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "tag": "forge:glass_panes/colorless"
+                    }
+                ]
+            }
+        },
+        "has_the_recipe": {
+            "trigger": "minecraft:recipe_unlocked",
+            "conditions": {
+                "recipe": "barter:light_gray_appraisal_table"
+            }
+        }
+    },
+    "requirements": [
+        [
+            "has_pane",
+            "has_the_recipe"
+        ]
+    ]
+}

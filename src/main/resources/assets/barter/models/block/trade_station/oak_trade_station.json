@@ -1,6 +1,7 @@
 {
     "parent": "barter:block/trade_station/trade_station_wooden_base",
     "textures": {
+        "frame": "block/oak_log",
         "side": "block/oak_planks"
     }
 }

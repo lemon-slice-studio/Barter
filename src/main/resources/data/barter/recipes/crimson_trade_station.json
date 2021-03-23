@@ -8,7 +8,7 @@
     ],
     "key": {
         "*": {
-            "tag": "forge:leather"
+            "item": "minecraft:crimson_hyphae"
         },
         "+": {
             "item": "minecraft:chest"

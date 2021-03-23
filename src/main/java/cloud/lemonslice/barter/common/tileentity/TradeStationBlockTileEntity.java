@@ -4,8 +4,8 @@ import cloud.lemonslice.barter.common.container.TradeStationPurchaseContainer;
 import cloud.lemonslice.barter.common.container.TradeStationSaleContainer;
 import cloud.lemonslice.barter.common.item.ItemsRegistry;
 import cloud.lemonslice.barter.common.item.KeyItem;
+import cloud.lemonslice.barter.helper.JsonHelper;
 import com.google.common.collect.Lists;
-import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
@@ -162,7 +162,7 @@ public class TradeStationBlockTileEntity extends NormalContainerTileEntity
         inputIngredients.clear();
         try
         {
-            JsonObject json = getJsonFromString(input);
+            JsonObject json = JsonHelper.getJsonFromString(input);
             for (int i = 1; i <= 4; i++)
             {
                 JsonElement element = getInputElement(json, i);
@@ -198,12 +198,6 @@ public class TradeStationBlockTileEntity extends NormalContainerTileEntity
             throw new JsonSyntaxException("Json cannot be null");
         }
         return obj.get("input" + index);
-    }
-
-    public JsonObject getJsonFromString(String text)
-    {
-        Gson g = new Gson();
-        return g.fromJson(text, JsonObject.class);
     }
 
     public void setCheck(int check)
