@@ -11,6 +11,40 @@ import static cloud.lemonslice.barter.Barter.ITEM_GROUP;
 
 public final class BlocksRegistry extends RegistryModule
 {
+    public static final Block WHITE_APPRAISAL_TABLE = new AppraisalTableBlock("white_appraisal_table");
+    public static final Block ORANGE_APPRAISAL_TABLE = new AppraisalTableBlock("orange_appraisal_table");
+    public static final Block MAGENTA_APPRAISAL_TABLE = new AppraisalTableBlock("magenta_appraisal_table");
+    public static final Block LIGHT_BLUE_APPRAISAL_TABLE = new AppraisalTableBlock("light_blue_appraisal_table");
+    public static final Block YELLOW_APPRAISAL_TABLE = new AppraisalTableBlock("yellow_appraisal_table");
+    public static final Block LIME_APPRAISAL_TABLE = new AppraisalTableBlock("lime_appraisal_table");
+    public static final Block PINK_APPRAISAL_TABLE = new AppraisalTableBlock("pink_appraisal_table");
+    public static final Block GRAY_APPRAISAL_TABLE = new AppraisalTableBlock("gray_appraisal_table");
+    public static final Block LIGHT_GRAY_APPRAISAL_TABLE = new AppraisalTableBlock("light_gray_appraisal_table");
+    public static final Block CYAN_APPRAISAL_TABLE = new AppraisalTableBlock("cyan_appraisal_table");
+    public static final Block PURPLE_APPRAISAL_TABLE = new AppraisalTableBlock("purple_appraisal_table");
+    public static final Block BLUE_APPRAISAL_TABLE = new AppraisalTableBlock("blue_appraisal_table");
+    public static final Block BROWN_APPRAISAL_TABLE = new AppraisalTableBlock("brown_appraisal_table");
+    public static final Block GREEN_APPRAISAL_TABLE = new AppraisalTableBlock("green_appraisal_table");
+    public static final Block RED_APPRAISAL_TABLE = new AppraisalTableBlock("red_appraisal_table");
+    public static final Block BLACK_APPRAISAL_TABLE = new AppraisalTableBlock("black_appraisal_table");
+
+    public static final BlockItem WHITE_APPRAISAL_TABLE_ITEM = new NormalBlockItem(WHITE_APPRAISAL_TABLE, ITEM_GROUP);
+    public static final BlockItem ORANGE_APPRAISAL_TABLE_ITEM = new NormalBlockItem(ORANGE_APPRAISAL_TABLE, ITEM_GROUP);
+    public static final BlockItem MAGENTA_APPRAISAL_TABLE_ITEM = new NormalBlockItem(MAGENTA_APPRAISAL_TABLE, ITEM_GROUP);
+    public static final BlockItem LIGHT_BLUE_APPRAISAL_TABLE_ITEM = new NormalBlockItem(LIGHT_BLUE_APPRAISAL_TABLE, ITEM_GROUP);
+    public static final BlockItem YELLOW_APPRAISAL_TABLE_ITEM = new NormalBlockItem(YELLOW_APPRAISAL_TABLE, ITEM_GROUP);
+    public static final BlockItem LIME_APPRAISAL_TABLE_ITEM = new NormalBlockItem(LIME_APPRAISAL_TABLE, ITEM_GROUP);
+    public static final BlockItem PINK_APPRAISAL_TABLE_ITEM = new NormalBlockItem(PINK_APPRAISAL_TABLE, ITEM_GROUP);
+    public static final BlockItem GRAY_APPRAISAL_TABLE_ITEM = new NormalBlockItem(GRAY_APPRAISAL_TABLE, ITEM_GROUP);
+    public static final BlockItem LIGHT_GRAY_APPRAISAL_TABLE_ITEM = new NormalBlockItem(LIGHT_GRAY_APPRAISAL_TABLE, ITEM_GROUP);
+    public static final BlockItem CYAN_APPRAISAL_TABLE_ITEM = new NormalBlockItem(CYAN_APPRAISAL_TABLE, ITEM_GROUP);
+    public static final BlockItem PURPLE_APPRAISAL_TABLE_ITEM = new NormalBlockItem(PURPLE_APPRAISAL_TABLE, ITEM_GROUP);
+    public static final BlockItem BLUE_APPRAISAL_TABLE_ITEM = new NormalBlockItem(BLUE_APPRAISAL_TABLE, ITEM_GROUP);
+    public static final BlockItem BROWN_APPRAISAL_TABLE_ITEM = new NormalBlockItem(BROWN_APPRAISAL_TABLE, ITEM_GROUP);
+    public static final BlockItem GREEN_APPRAISAL_TABLE_ITEM = new NormalBlockItem(GREEN_APPRAISAL_TABLE, ITEM_GROUP);
+    public static final BlockItem RED_APPRAISAL_TABLE_ITEM = new NormalBlockItem(RED_APPRAISAL_TABLE, ITEM_GROUP);
+    public static final BlockItem BLACK_APPRAISAL_TABLE_ITEM = new NormalBlockItem(BLACK_APPRAISAL_TABLE, ITEM_GROUP);
+
     public static final Block ACACIA_TRADE_STATION = new WoodenTradeStationBlock("acacia_trade_station");
     public static final Block BIRCH_TRADE_STATION = new WoodenTradeStationBlock("birch_trade_station");
     public static final Block CRIMSON_TRADE_STATION = new WoodenTradeStationBlock("crimson_trade_station");

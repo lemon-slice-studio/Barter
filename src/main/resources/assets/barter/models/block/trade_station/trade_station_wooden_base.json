@@ -1,7 +1,6 @@
 {
     "credit": "Made with Blockbench",
     "textures": {
-        "frame": "barter:block/leather_cover",
         "particle": "#side"
     },
     "elements": [

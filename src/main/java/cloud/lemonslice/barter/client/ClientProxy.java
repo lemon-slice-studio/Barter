@@ -13,6 +13,8 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 
 import java.util.Arrays;
 
+import static cloud.lemonslice.barter.common.block.BlocksRegistry.*;
+
 public class ClientProxy extends CommonProxy
 {
 
@@ -30,6 +32,10 @@ public class ClientProxy extends CommonProxy
 
     public static void registerRenderType()
     {
+        registerCutoutType(WHITE_APPRAISAL_TABLE, ORANGE_APPRAISAL_TABLE, MAGENTA_APPRAISAL_TABLE, LIGHT_BLUE_APPRAISAL_TABLE,
+                YELLOW_APPRAISAL_TABLE, LIME_APPRAISAL_TABLE, PINK_APPRAISAL_TABLE, GRAY_APPRAISAL_TABLE,
+                LIGHT_GRAY_APPRAISAL_TABLE, CYAN_APPRAISAL_TABLE, PURPLE_APPRAISAL_TABLE, BLUE_APPRAISAL_TABLE,
+                BROWN_APPRAISAL_TABLE, GREEN_APPRAISAL_TABLE, RED_APPRAISAL_TABLE, BLACK_APPRAISAL_TABLE);
     }
 
     public static void bindTileEntityRenderer()

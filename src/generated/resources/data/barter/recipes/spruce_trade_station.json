@@ -8,7 +8,7 @@
     ],
     "key": {
         "*": {
-            "tag": "forge:leather"
+            "item": "minecraft:spruce_wood"
         },
         "+": {
             "item": "minecraft:chest"
