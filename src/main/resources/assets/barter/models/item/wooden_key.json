@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "barter:item/trade_station_staff_key"
+        "layer0": "barter:item/wooden_key"
     }
 }

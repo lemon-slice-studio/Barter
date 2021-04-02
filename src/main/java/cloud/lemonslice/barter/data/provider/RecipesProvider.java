@@ -22,22 +22,22 @@ public final class RecipesProvider extends RecipeProvider
     @Override
     protected void registerRecipes(Consumer<IFinishedRecipe> consumer)
     {
-        ShapedRecipeBuilder.shapedRecipe(ItemsRegistry.WOODEN_TRADE_STATION_SHOPKEEPER_KEY)
+        ShapedRecipeBuilder.shapedRecipe(ItemsRegistry.WOODEN_KEY)
                 .key('x', Tags.Items.RODS_WOODEN).key('+', ItemTags.PLANKS)
                 .patternLine("+  ").patternLine(" xx").patternLine("  x")
                 .setGroup("wooden_trade_station_shopkeeper_key")
                 .addCriterion("has_planks", hasItem(ItemTags.PLANKS)).build(consumer);
-        ShapedRecipeBuilder.shapedRecipe(ItemsRegistry.STONE_TRADE_STATION_SHOPKEEPER_KEY)
+        ShapedRecipeBuilder.shapedRecipe(ItemsRegistry.STONE_KEY)
                 .key('*', Tags.Items.COBBLESTONE).key('+', Tags.Items.STONE)
                 .patternLine("+  ").patternLine(" **").patternLine("  *")
                 .setGroup("stone_trade_station_shopkeeper_key")
                 .addCriterion("has_cobblestone", hasItem(Tags.Items.COBBLESTONE)).build(consumer);
-        ShapedRecipeBuilder.shapedRecipe(ItemsRegistry.TRADE_STATION_SHOPKEEPER_KEY)
+        ShapedRecipeBuilder.shapedRecipe(ItemsRegistry.GOLDEN_KEY)
                 .key('*', Tags.Items.INGOTS_GOLD).key('x', Tags.Items.NUGGETS_GOLD).key('+', Tags.Items.STORAGE_BLOCKS_GOLD)
                 .patternLine("+  ").patternLine(" *x").patternLine("  *")
                 .setGroup("trade_station_shopkeeper_key")
                 .addCriterion("has_gold", hasItem(Tags.Items.STORAGE_BLOCKS_GOLD)).build(consumer);
-        ShapedRecipeBuilder.shapedRecipe(ItemsRegistry.TRADE_STATION_STAFF_KEY)
+        ShapedRecipeBuilder.shapedRecipe(ItemsRegistry.STAFF_KEY)
                 .key('*', Tags.Items.INGOTS_IRON).key('x', Tags.Items.NUGGETS_IRON).key('+', Tags.Items.STORAGE_BLOCKS_IRON)
                 .patternLine("+  ").patternLine(" *x").patternLine("  *")
                 .setGroup("trade_station_staff_key")

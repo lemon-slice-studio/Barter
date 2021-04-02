@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "barter:item/trade_station_admin_key"
+        "layer0": "barter:item/iron_key"
     }
 }
