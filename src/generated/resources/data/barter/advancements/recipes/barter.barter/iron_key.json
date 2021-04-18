@@ -2,16 +2,16 @@
     "parent": "minecraft:recipes/root",
     "rewards": {
         "recipes": [
-            "barter:wooden_trade_station_shopkeeper_key"
+            "barter:iron_key"
         ]
     },
     "criteria": {
-        "has_planks": {
+        "has_iron": {
             "trigger": "minecraft:inventory_changed",
             "conditions": {
                 "items": [
                     {
-                        "tag": "minecraft:planks"
+                        "tag": "forge:ingots/iron"
                     }
                 ]
             }
@@ -19,13 +19,13 @@
         "has_the_recipe": {
             "trigger": "minecraft:recipe_unlocked",
             "conditions": {
-                "recipe": "barter:wooden_trade_station_shopkeeper_key"
+                "recipe": "barter:iron_key"
             }
         }
     },
     "requirements": [
         [
-            "has_planks",
+            "has_iron",
             "has_the_recipe"
         ]
     ]

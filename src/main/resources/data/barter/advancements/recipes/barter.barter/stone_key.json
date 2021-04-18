@@ -2,7 +2,7 @@
     "parent": "minecraft:recipes/root",
     "rewards": {
         "recipes": [
-            "barter:stone_trade_station_shopkeeper_key"
+            "barter:stone_key"
         ]
     },
     "criteria": {
@@ -19,7 +19,7 @@
         "has_the_recipe": {
             "trigger": "minecraft:recipe_unlocked",
             "conditions": {
-                "recipe": "barter:stone_trade_station_shopkeeper_key"
+                "recipe": "barter:stone_key"
             }
         }
     },
