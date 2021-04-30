@@ -3,18 +3,15 @@
     "group": "wooden_trade_station",
     "pattern": [
         "***",
-        "x+x",
+        "x x",
         "xxx"
     ],
     "key": {
         "*": {
             "item": "minecraft:acacia_wood"
         },
-        "+": {
-            "item": "minecraft:chest"
-        },
         "x": {
-            "item": "minecraft:acacia_slab"
+            "item": "minecraft:acacia_planks"
         }
     },
     "result": {

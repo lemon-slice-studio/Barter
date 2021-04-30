@@ -3,18 +3,15 @@
     "group": "wooden_trade_station",
     "pattern": [
         "***",
-        "x+x",
+        "x x",
         "xxx"
     ],
     "key": {
         "*": {
             "item": "minecraft:crimson_hyphae"
         },
-        "+": {
-            "item": "minecraft:chest"
-        },
         "x": {
-            "item": "minecraft:crimson_slab"
+            "item": "minecraft:crimson_planks"
         }
     },
     "result": {
