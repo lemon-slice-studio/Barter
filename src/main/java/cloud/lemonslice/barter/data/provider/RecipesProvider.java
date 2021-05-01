@@ -44,45 +44,45 @@ public final class RecipesProvider extends RecipeProvider
                 .addCriterion("has_iron", hasItem(Tags.Items.INGOTS_IRON)).build(consumer);
 
         ShapedRecipeBuilder.shapedRecipe(BlocksRegistry.ACACIA_TRADE_STATION_ITEM)
-                .key('*', Blocks.ACACIA_WOOD).key('+', Blocks.CHEST).key('x', Blocks.ACACIA_SLAB)
-                .patternLine("***").patternLine("x+x").patternLine("xxx")
+                .key('*', Blocks.ACACIA_WOOD).key('x', Blocks.ACACIA_PLANKS)
+                .patternLine("***").patternLine("x x").patternLine("xxx")
                 .setGroup("wooden_trade_station")
-                .addCriterion("has_planks", hasItem(Blocks.ACACIA_SLAB)).build(consumer);
+                .addCriterion("has_planks", hasItem(Blocks.ACACIA_PLANKS)).build(consumer);
         ShapedRecipeBuilder.shapedRecipe(BlocksRegistry.BIRCH_TRADE_STATION_ITEM)
-                .key('*', Blocks.BIRCH_WOOD).key('+', Blocks.CHEST).key('x', Blocks.BIRCH_SLAB)
-                .patternLine("***").patternLine("x+x").patternLine("xxx")
+                .key('*', Blocks.BIRCH_WOOD).key('x', Blocks.BIRCH_PLANKS)
+                .patternLine("***").patternLine("x x").patternLine("xxx")
                 .setGroup("wooden_trade_station")
-                .addCriterion("has_planks", hasItem(Blocks.BIRCH_SLAB)).build(consumer);
+                .addCriterion("has_planks", hasItem(Blocks.BIRCH_PLANKS)).build(consumer);
         ShapedRecipeBuilder.shapedRecipe(BlocksRegistry.CRIMSON_TRADE_STATION_ITEM)
-                .key('*', Blocks.CRIMSON_HYPHAE).key('+', Blocks.CHEST).key('x', Blocks.CRIMSON_SLAB)
-                .patternLine("***").patternLine("x+x").patternLine("xxx")
+                .key('*', Blocks.CRIMSON_HYPHAE).key('x', Blocks.CRIMSON_PLANKS)
+                .patternLine("***").patternLine("x x").patternLine("xxx")
                 .setGroup("wooden_trade_station")
-                .addCriterion("has_planks", hasItem(Blocks.CRIMSON_SLAB)).build(consumer);
+                .addCriterion("has_planks", hasItem(Blocks.CRIMSON_PLANKS)).build(consumer);
         ShapedRecipeBuilder.shapedRecipe(BlocksRegistry.DARK_OAK_TRADE_STATION_ITEM)
-                .key('*', Blocks.DARK_OAK_WOOD).key('+', Blocks.CHEST).key('x', Blocks.DARK_OAK_SLAB)
-                .patternLine("***").patternLine("x+x").patternLine("xxx")
+                .key('*', Blocks.DARK_OAK_WOOD).key('x', Blocks.DARK_OAK_PLANKS)
+                .patternLine("***").patternLine("x x").patternLine("xxx")
                 .setGroup("wooden_trade_station")
-                .addCriterion("has_planks", hasItem(Blocks.DARK_OAK_SLAB)).build(consumer);
+                .addCriterion("has_planks", hasItem(Blocks.DARK_OAK_PLANKS)).build(consumer);
         ShapedRecipeBuilder.shapedRecipe(BlocksRegistry.JUNGLE_TRADE_STATION_ITEM)
-                .key('*', Blocks.JUNGLE_WOOD).key('+', Blocks.CHEST).key('x', Blocks.JUNGLE_SLAB)
-                .patternLine("***").patternLine("x+x").patternLine("xxx")
+                .key('*', Blocks.JUNGLE_WOOD).key('x', Blocks.JUNGLE_PLANKS)
+                .patternLine("***").patternLine("x x").patternLine("xxx")
                 .setGroup("wooden_trade_station")
-                .addCriterion("has_planks", hasItem(Blocks.JUNGLE_SLAB)).build(consumer);
+                .addCriterion("has_planks", hasItem(Blocks.JUNGLE_PLANKS)).build(consumer);
         ShapedRecipeBuilder.shapedRecipe(BlocksRegistry.OAK_TRADE_STATION_ITEM)
-                .key('*', Blocks.OAK_WOOD).key('+', Blocks.CHEST).key('x', Blocks.OAK_SLAB)
-                .patternLine("***").patternLine("x+x").patternLine("xxx")
+                .key('*', Blocks.OAK_WOOD).key('x', Blocks.OAK_PLANKS)
+                .patternLine("***").patternLine("x x").patternLine("xxx")
                 .setGroup("wooden_trade_station")
-                .addCriterion("has_planks", hasItem(Blocks.OAK_SLAB)).build(consumer);
+                .addCriterion("has_planks", hasItem(Blocks.OAK_PLANKS)).build(consumer);
         ShapedRecipeBuilder.shapedRecipe(BlocksRegistry.SPRUCE_TRADE_STATION_ITEM)
-                .key('*', Blocks.SPRUCE_WOOD).key('+', Blocks.CHEST).key('x', Blocks.SPRUCE_SLAB)
-                .patternLine("***").patternLine("x+x").patternLine("xxx")
+                .key('*', Blocks.SPRUCE_WOOD).key('x', Blocks.SPRUCE_PLANKS)
+                .patternLine("***").patternLine("x x").patternLine("xxx")
                 .setGroup("wooden_trade_station")
-                .addCriterion("has_planks", hasItem(Blocks.SPRUCE_SLAB)).build(consumer);
+                .addCriterion("has_planks", hasItem(Blocks.SPRUCE_PLANKS)).build(consumer);
         ShapedRecipeBuilder.shapedRecipe(BlocksRegistry.WARPED_TRADE_STATION_ITEM)
-                .key('*', Blocks.WARPED_HYPHAE).key('+', Blocks.CHEST).key('x', Blocks.WARPED_SLAB)
-                .patternLine("***").patternLine("x+x").patternLine("xxx")
+                .key('*', Blocks.WARPED_HYPHAE).key('x', Blocks.WARPED_PLANKS)
+                .patternLine("***").patternLine("x x").patternLine("xxx")
                 .setGroup("wooden_trade_station")
-                .addCriterion("has_planks", hasItem(Blocks.WARPED_SLAB)).build(consumer);
+                .addCriterion("has_planks", hasItem(Blocks.WARPED_PLANKS)).build(consumer);
 
         ShapedRecipeBuilder.shapedRecipe(BlocksRegistry.WHITE_TRADE_STATION_ITEM)
                 .key('*', Blocks.WHITE_CARPET).key('-', Blocks.OBSIDIAN).key('+', Blocks.SHULKER_BOX).key('x', Blocks.SMOOTH_STONE_SLAB).key('#', Tags.Items.DUSTS_REDSTONE)
