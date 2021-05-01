@@ -1,23 +1,23 @@
 {
-    "type": "minecraft:crafting_shaped",
-    "group": "wooden_trade_station",
-    "pattern": [
-        "***",
-        "x+x",
-        "xxx"
-    ],
-    "key": {
-        "*": {
-            "item": "minecraft:spruce_wood"
-        },
-        "+": {
-            "item": "minecraft:chest"
-        },
-        "x": {
-            "item": "minecraft:spruce_slab"
-        }
+  "type": "minecraft:crafting_shaped",
+  "group": "wooden_trade_station",
+  "pattern": [
+    "***",
+    "x+x",
+    "xxx"
+  ],
+  "key": {
+    "*": {
+      "item": "minecraft:spruce_wood"
     },
-    "result": {
-        "item": "barter:spruce_trade_station"
+    "+": {
+      "item": "minecraft:chest"
+    },
+    "x": {
+      "item": "minecraft:spruce_slab"
     }
+  },
+  "result": {
+    "item": "barter:spruce_trade_station"
+  }
 }
