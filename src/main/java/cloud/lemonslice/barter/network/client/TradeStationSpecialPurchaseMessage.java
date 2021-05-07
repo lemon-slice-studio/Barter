@@ -16,17 +16,20 @@ public class TradeStationSpecialPurchaseMessage implements INormalMessage
 {
     private final BlockPos pos;
     private final int index;
+    private final boolean all;
 
-    public TradeStationSpecialPurchaseMessage(BlockPos pos, int index)
+    public TradeStationSpecialPurchaseMessage(BlockPos pos, int index, boolean all)
     {
         this.pos = pos;
         this.index = index;
+        this.all = all;
     }
 
     public TradeStationSpecialPurchaseMessage(PacketBuffer buf)
     {
         pos = buf.readBlockPos();
         index = buf.readInt();
+        all = buf.readBoolean();
     }
 
     @Override
@@ -34,6 +37,7 @@ public class TradeStationSpecialPurchaseMessage implements INormalMessage
     {
         packetBuffer.writeBlockPos(pos);
         packetBuffer.writeInt(index);
+        packetBuffer.writeBoolean(all);
     }
 
     @Override
@@ -49,7 +53,7 @@ public class TradeStationSpecialPurchaseMessage implements INormalMessage
                     TileEntity te = world.getTileEntity(pos);
                     if (te instanceof TradeStationBlockTileEntity && !((TradeStationBlockTileEntity) te).isLocked())
                     {
-                        ((TradeStationBlockTileEntity) te).specialPurchase(ctx.getSender(), index);
+                        ((TradeStationBlockTileEntity) te).specialPurchase(ctx.getSender(), index, all);
                     }
                 }
             });

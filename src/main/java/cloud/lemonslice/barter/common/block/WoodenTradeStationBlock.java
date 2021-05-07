@@ -12,7 +12,6 @@ import net.minecraft.loot.LootContext;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.items.ItemStackHandler;
 
 import java.util.Collections;
 import java.util.List;
@@ -52,17 +51,6 @@ public class WoodenTradeStationBlock extends TradeStationBlock
                     }
                 }
             });
-
-
-            ItemStackHandler h = ((TradeStationBlockTileEntity) te).getInputInventory();
-            for (int i = 0; i < 4; i++)
-            {
-                ItemStack stack = h.getStackInSlot(i);
-                if (stack != ItemStack.EMPTY)
-                {
-                    Block.spawnAsEntity(worldIn, pos, stack);
-                }
-            }
         }
     }
 

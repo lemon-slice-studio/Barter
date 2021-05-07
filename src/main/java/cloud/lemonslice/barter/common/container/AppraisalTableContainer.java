@@ -68,12 +68,13 @@ public class AppraisalTableContainer extends Container
         }
         else if (index < 31)
         {
-            isMerged = mergeItemStack(newStack, 5, 9, false)
+            isMerged = mergeItemStack(newStack, 0, 4, false)
                     || mergeItemStack(newStack, 31, 40, true);
         }
         else
         {
-            isMerged = mergeItemStack(newStack, 0, 31, false);
+            isMerged = mergeItemStack(newStack, 0, 4, false)
+                    || mergeItemStack(newStack, 4, 31, false);
         }
 
         if (!isMerged)

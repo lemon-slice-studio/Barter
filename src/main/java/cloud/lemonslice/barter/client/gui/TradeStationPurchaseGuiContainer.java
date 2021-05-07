@@ -12,6 +12,7 @@ import com.google.common.collect.Lists;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.datafixers.util.Pair;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.entity.player.PlayerInventory;
@@ -160,7 +161,7 @@ public class TradeStationPurchaseGuiContainer extends ContainerScreen<TradeStati
                 return;
             }
             container.refreshRemain();
-            int canPurchase = container.getTileEntity().canPurchaseMuch(container.getPurchaseCount());
+            int canPurchase = container.getTileEntity().canPurchaseMuch(container.inputs, container.getPurchaseCount());
             List<ITextComponent> list = Lists.newArrayList(button.getMessage());
             if (canPurchase != container.getPurchaseCount())
             {
@@ -205,14 +206,14 @@ public class TradeStationPurchaseGuiContainer extends ContainerScreen<TradeStati
         {
             if (getContainer().getTileEntity().isSpecialMode())
             {
-                SimpleNetworkHandler.CHANNEL.sendToServer(new TradeStationSpecialPurchaseMessage(getContainer().getTileEntity().getPos(), indexToBuy));
+                SimpleNetworkHandler.CHANNEL.sendToServer(new TradeStationSpecialPurchaseMessage(getContainer().getTileEntity().getPos(), indexToBuy, Screen.hasShiftDown()));
                 if (indexToBuy != 0)
                 {
                     chooseNext();
                 }
             }
             else
-                SimpleNetworkHandler.CHANNEL.sendToServer(new TradeStationPurchaseMessage(getContainer().getTileEntity().getPos()));
+                SimpleNetworkHandler.CHANNEL.sendToServer(new TradeStationPurchaseMessage(getContainer().getTileEntity().getPos(), Screen.hasShiftDown()));
         }
     }
 

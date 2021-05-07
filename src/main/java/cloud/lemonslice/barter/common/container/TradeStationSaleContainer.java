@@ -32,7 +32,7 @@ public class TradeStationSaleContainer extends Container
                 @Override
                 public boolean isItemValid(@Nonnull ItemStack stack)
                 {
-                    return !(Block.getBlockFromItem(stack.getItem()) instanceof TradeStationBlock);
+                    return !(Block.getBlockFromItem(stack.getItem()) instanceof TradeStationBlock && stack.hasTag());
                 }
             });
             for (int i = 2; i < 4; ++i)
@@ -44,7 +44,7 @@ public class TradeStationSaleContainer extends Container
                         @Override
                         public boolean isItemValid(@Nonnull ItemStack stack)
                         {
-                            return !(Block.getBlockFromItem(stack.getItem()) instanceof TradeStationBlock);
+                            return !(Block.getBlockFromItem(stack.getItem()) instanceof TradeStationBlock && stack.hasTag());
                         }
                     });
                 }
@@ -61,7 +61,7 @@ public class TradeStationSaleContainer extends Container
                         @Override
                         public boolean isItemValid(@Nonnull ItemStack stack)
                         {
-                            return !(Block.getBlockFromItem(stack.getItem()) instanceof TradeStationBlock);
+                            return !(Block.getBlockFromItem(stack.getItem()) instanceof TradeStationBlock && stack.hasTag());
                         }
                     });
                 }

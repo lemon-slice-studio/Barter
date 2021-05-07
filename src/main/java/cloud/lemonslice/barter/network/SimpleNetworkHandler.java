@@ -13,7 +13,7 @@ import static cloud.lemonslice.barter.Barter.MODID;
 
 public final class SimpleNetworkHandler
 {
-    public static final String NETWORK_VERSION = "1.0";
+    public static final String NETWORK_VERSION = "1.1";
     public static final SimpleChannel CHANNEL = NetworkRegistry.ChannelBuilder.named(new ResourceLocation(MODID, "main")).networkProtocolVersion(() -> NETWORK_VERSION).serverAcceptedVersions(NETWORK_VERSION::equals).clientAcceptedVersions(NETWORK_VERSION::equals).simpleChannel();
 
     public static void init()

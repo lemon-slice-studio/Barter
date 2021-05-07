@@ -33,7 +33,6 @@ public class TradeStationBlockTileEntity extends NormalContainerTileEntity
 {
     private final LazyOptional<ItemStackHandler> containerInventory = LazyOptional.of(() -> this.createContainerItemHandler(19));
     private final LazyOptional<ItemStackHandler> purchaseInventory = LazyOptional.of(() -> this.createItemHandler(18));
-    private final ItemStackHandler inputInventory = this.createItemHandler(4);
     private final List<Pair<Ingredient, Integer>> inputIngredients = Lists.newArrayList();
 
     private String uuidOwner = "";
@@ -55,7 +54,6 @@ public class TradeStationBlockTileEntity extends NormalContainerTileEntity
         super.read(state, tag);
         this.containerInventory.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("Container")));
         this.purchaseInventory.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("Purchase")));
-        ((INBTSerializable<CompoundNBT>) inputInventory).deserializeNBT(tag.getCompound("InputContainer"));
         setInput(tag.getString("Input"));
         uuidOwner = tag.getString("UUID");
         uuidStaff = tag.getString("UUIDStaff");
@@ -69,7 +67,6 @@ public class TradeStationBlockTileEntity extends NormalContainerTileEntity
     {
         containerInventory.ifPresent(h -> tag.put("Container", ((INBTSerializable<CompoundNBT>) h).serializeNBT()));
         purchaseInventory.ifPresent(h -> tag.put("Purchase", ((INBTSerializable<CompoundNBT>) h).serializeNBT()));
-        tag.put("InputContainer", ((INBTSerializable<CompoundNBT>) inputInventory).serializeNBT());
         tag.putString("Input", input);
         tag.putString("UUID", uuidOwner);
         tag.putString("UUIDStaff", uuidStaff);
@@ -225,12 +222,21 @@ public class TradeStationBlockTileEntity extends NormalContainerTileEntity
 
     }
 
-    public void specialPurchase(PlayerEntity playerEntity, int index)
+    public void specialPurchase(PlayerEntity playerEntity, int index, boolean buyAll)
     {
         containerInventory.ifPresent(h ->
         {
-            int purchaseCount = h.getStackInSlot(index).getCount();
+            int purchaseCount = buyAll ? h.getStackInSlot(index).getCount() : 1;
             if (purchaseCount == 0)
+            {
+                return;
+            }
+            ItemStackHandler inputItems;
+            if (playerEntity.openContainer instanceof TradeStationPurchaseContainer)
+            {
+                inputItems = ((TradeStationPurchaseContainer) playerEntity.openContainer).inputs;
+            }
+            else
             {
                 return;
             }
@@ -240,7 +246,7 @@ public class TradeStationBlockTileEntity extends NormalContainerTileEntity
                 {
                     Ingredient ingredient = inputIngredients.get(i).getFirst();
                     int count = inputIngredients.get(i).getSecond();
-                    ItemStack input = this.inputInventory.getStackInSlot(i);
+                    ItemStack input = inputItems.getStackInSlot(i);
                     if (ingredient.test(input))
                     {
                         purchaseCount = Math.min(purchaseCount, input.getCount() / count);
@@ -256,7 +262,7 @@ public class TradeStationBlockTileEntity extends NormalContainerTileEntity
                 return;
             }
 
-            purchaseCount = canPurchaseMuch(purchaseCount);
+            purchaseCount = canPurchaseMuch(inputItems, purchaseCount);
 
             if (purchaseCount == 0)
             {
@@ -265,7 +271,7 @@ public class TradeStationBlockTileEntity extends NormalContainerTileEntity
 
             for (int i = 0; i < inputIngredients.size(); i++)
             {
-                ItemStack get = inputInventory.extractItem(i, purchaseCount * inputIngredients.get(i).getSecond(), false);
+                ItemStack get = inputItems.extractItem(i, purchaseCount * inputIngredients.get(i).getSecond(), false);
                 purchaseInventory.ifPresent(inv -> ItemHandlerHelper.insertItemStacked(inv, get, false));
             }
             ItemHandlerHelper.giveItemToPlayer(playerEntity, h.getStackInSlot(index));
@@ -288,7 +294,7 @@ public class TradeStationBlockTileEntity extends NormalContainerTileEntity
         });
     }
 
-    public void purchase(PlayerEntity playerEntity)
+    public void purchase(PlayerEntity playerEntity, boolean buyAll)
     {
         containerInventory.ifPresent(h ->
         {
@@ -301,13 +307,23 @@ public class TradeStationBlockTileEntity extends NormalContainerTileEntity
             {
                 return;
             }
+            purchaseCount = buyAll ? purchaseCount : 1;
+            ItemStackHandler inputItems;
+            if (playerEntity.openContainer instanceof TradeStationPurchaseContainer)
+            {
+                inputItems = ((TradeStationPurchaseContainer) playerEntity.openContainer).inputs;
+            }
+            else
+            {
+                return;
+            }
             if (!inputIngredients.isEmpty())
             {
                 for (int i = 0; i < inputIngredients.size(); i++)
                 {
                     Ingredient ingredient = inputIngredients.get(i).getFirst();
                     int count = inputIngredients.get(i).getSecond();
-                    ItemStack input = this.inputInventory.getStackInSlot(i);
+                    ItemStack input = inputItems.getStackInSlot(i);
                     if (ingredient.test(input))
                     {
                         purchaseCount = Math.min(purchaseCount, input.getCount() / count);
@@ -323,7 +339,7 @@ public class TradeStationBlockTileEntity extends NormalContainerTileEntity
                 return;
             }
 
-            purchaseCount = canPurchaseMuch(purchaseCount);
+            purchaseCount = canPurchaseMuch(inputItems, purchaseCount);
 
             if (purchaseCount == 0)
             {
@@ -332,7 +348,7 @@ public class TradeStationBlockTileEntity extends NormalContainerTileEntity
 
             for (int i = 0; i < inputIngredients.size(); i++)
             {
-                ItemStack get = inputInventory.extractItem(i, purchaseCount * inputIngredients.get(i).getSecond(), false);
+                ItemStack get = inputItems.extractItem(i, purchaseCount * inputIngredients.get(i).getSecond(), false);
                 purchaseInventory.ifPresent(inv -> ItemHandlerHelper.insertItemStacked(inv, get, false));
             }
             purchaseItem(playerEntity, purchaseCount);
@@ -341,7 +357,7 @@ public class TradeStationBlockTileEntity extends NormalContainerTileEntity
     }
 
     // To judge how much the chest can take in.
-    public int canPurchaseMuch(int purchase)
+    public int canPurchaseMuch(ItemStackHandler input, int purchase)
     {
         return purchaseInventory.map(h ->
         {
@@ -350,7 +366,7 @@ public class TradeStationBlockTileEntity extends NormalContainerTileEntity
             {
                 for (int j = accept; j > 0; j--)
                 {
-                    ItemStack get = inputInventory.getStackInSlot(i).copy();
+                    ItemStack get = input.getStackInSlot(i).copy();
                     get.setCount(accept * inputIngredients.get(i).getSecond());
                     if (!ItemHandlerHelper.insertItemStacked(h, get, true).isEmpty())
                     {
@@ -497,11 +513,6 @@ public class TradeStationBlockTileEntity extends NormalContainerTileEntity
     public boolean isSpecialMode()
     {
         return isSpecialMode;
-    }
-
-    public ItemStackHandler getInputInventory()
-    {
-        return inputInventory;
     }
 
     public LazyOptional<ItemStackHandler> getPurchaseInventory()

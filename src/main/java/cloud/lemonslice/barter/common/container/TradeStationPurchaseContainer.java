@@ -4,6 +4,7 @@ import cloud.lemonslice.barter.common.tileentity.TradeStationBlockTileEntity;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
@@ -11,7 +12,6 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
@@ -24,7 +24,7 @@ public class TradeStationPurchaseContainer extends Container
 {
     private TradeStationBlockTileEntity tileEntity;
     public final ItemStackHandler showing = new ItemStackHandler(5);
-    private ItemStackHandler input;
+    public final ItemStackHandler inputs = new ItemStackHandler(4);
 
     private int purchaseCount = 0;
     private int remainCount = 0;
@@ -33,7 +33,6 @@ public class TradeStationPurchaseContainer extends Container
     {
         super(TRADE_STATION_PURCHASE_CONTAINER, windowId);
         this.tileEntity = (TradeStationBlockTileEntity) world.getTileEntity(pos);
-        this.input = tileEntity.getInputInventory();
 
         for (int i = 0; i < 4; i++)
         {
@@ -69,7 +68,7 @@ public class TradeStationPurchaseContainer extends Container
 
         for (int i = 0; i < 4; i++)
         {
-            addSlot(new SlotItemHandler(input, i, 36 + 18 * i, 39)
+            addSlot(new SlotItemHandler(inputs, i, 36 + 18 * i, 39)
             {
                 @Override
                 public void onSlotChanged()
@@ -155,10 +154,20 @@ public class TradeStationPurchaseContainer extends Container
     public void onContainerClosed(PlayerEntity playerIn)
     {
         super.onContainerClosed(playerIn);
-        for (int i = 0; i < 4; i++)
+        if (!playerIn.isAlive() || playerIn instanceof ServerPlayerEntity && ((ServerPlayerEntity) playerIn).hasDisconnected())
         {
-            ItemHandlerHelper.giveItemToPlayer(playerIn, input.getStackInSlot(i));
-            input.setStackInSlot(i, ItemStack.EMPTY);
+            for (int j = 0; j < 4; ++j)
+            {
+                playerIn.dropItem(inputs.getStackInSlot(j), false);
+            }
+
+        }
+        else
+        {
+            for (int i = 0; i < 4; ++i)
+            {
+                playerIn.inventory.placeItemBackInInventory(playerIn.getEntityWorld(), inputs.getStackInSlot(i));
+            }
         }
     }
 
@@ -196,7 +205,7 @@ public class TradeStationPurchaseContainer extends Container
                     {
                         Ingredient ingredient = list.get(i).getFirst();
                         int count = list.get(i).getSecond();
-                        ItemStack input = this.input.getStackInSlot(i);
+                        ItemStack input = this.inputs.getStackInSlot(i);
                         if (ingredient.test(input))
                         {
                             purchaseCount = Math.min(purchaseCount, input.getCount() / count);

@@ -15,21 +15,25 @@ import java.util.function.Supplier;
 public class TradeStationPurchaseMessage implements INormalMessage
 {
     private final BlockPos pos;
+    private final boolean all;
 
-    public TradeStationPurchaseMessage(BlockPos pos)
+    public TradeStationPurchaseMessage(BlockPos pos, boolean all)
     {
         this.pos = pos;
+        this.all = all;
     }
 
     public TradeStationPurchaseMessage(PacketBuffer buf)
     {
         pos = buf.readBlockPos();
+        all = buf.readBoolean();
     }
 
     @Override
     public void toBytes(PacketBuffer packetBuffer)
     {
         packetBuffer.writeBlockPos(pos);
+        packetBuffer.writeBoolean(all);
     }
 
     @Override
@@ -45,7 +49,7 @@ public class TradeStationPurchaseMessage implements INormalMessage
                     TileEntity te = world.getTileEntity(pos);
                     if (te instanceof TradeStationBlockTileEntity && !((TradeStationBlockTileEntity) te).isLocked())
                     {
-                        ((TradeStationBlockTileEntity) te).purchase(ctx.getSender());
+                        ((TradeStationBlockTileEntity) te).purchase(ctx.getSender(), all);
                     }
                 }
             });
